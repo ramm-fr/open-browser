@@ -121,7 +121,7 @@ function chk(id) { return document.getElementById(id)?.checked ?? false; }
 
 // ── Sidebar Active Section Swapping Routines ──────────────────────────────
 function initNav() {
-  const btns     = document.querySelectorAll('.menu-item');
+  const btns     = document.querySelectorAll('.sidebar-nav-btn');
   const sections = document.querySelectorAll('.settings-section');
 
   function activate(target) {

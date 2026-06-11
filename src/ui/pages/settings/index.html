@@ -8,126 +8,108 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <script type="module" src="https://unpkg.com/css-peeps@1.0.2/dist/css-peeps/css-peeps.esm.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
 <div class="app-layout">
 
+  <!-- Left Sidebar -->
   <aside class="sidebar">
-    <div class="brand-group">
-      <i data-lucide="compass" class="brand-icon"></i>
-      <span>Settings</span>
+    <div class="sidebar-header">
+      <h1 class="sidebar-title">Settings</h1>
     </div>
 
-    <nav class="menu-stack">
-      <button class="menu-item is-active" data-section="get-started">
+    <nav class="sidebar-nav">
+      <button class="sidebar-nav-btn is-active" data-section="get-started">
         <i data-lucide="zap"></i> Get started
       </button>
-      <button class="menu-item" data-section="appearance">
+      <button class="sidebar-nav-btn" data-section="appearance">
         <i data-lucide="palette"></i> Appearance
       </button>
-      <button class="menu-item" data-section="privacy">
+      <button class="sidebar-nav-btn" data-section="privacy">
         <i data-lucide="lock"></i> Privacy & security
       </button>
-      <button class="menu-item" data-section="search">
+      <button class="sidebar-nav-btn" data-section="search">
         <i data-lucide="search"></i> Search engine
       </button>
-      <button class="menu-item" data-section="downloads">
+      <button class="sidebar-nav-btn" data-section="downloads">
         <i data-lucide="download"></i> Downloads
       </button>
-      <button class="menu-item" data-section="passwords">
+      <button class="sidebar-nav-btn" data-section="passwords">
         <i data-lucide="key-round"></i> Passwords
       </button>
-      <button class="menu-item" data-section="performance">
+      <button class="sidebar-nav-btn" data-section="performance">
         <i data-lucide="cpu"></i> Performance
       </button>
-      <button class="menu-item" data-section="about">
+      <button class="sidebar-nav-btn" data-section="about">
         <i data-lucide="help-circle"></i> About
       </button>
     </nav>
   </aside>
 
+  <!-- Main Content Area -->
   <main class="content-viewport">
-    <div class="canvas-limiter">
+    <div class="content-wrapper">
 
+      <!-- Get Started Section -->
       <section id="get-started" class="settings-section is-active">
-        <div class="peep-profile-block">
-          <div class="peep-avatar-frame">
-            <css-peep head="cap-backward" face="smile-big" expression="confident" accessory="glasses-2"></css-peep>
-          </div>
-          <div class="profile-meta">
-            <h2>System Profile</h2>
-            <p>Browser Operator Instance</p>
-          </div>
-        </div>
-
-        <h1 class="view-title">Get started</h1>
+        <h2 class="section-title">Get started</h2>
         
-        <div class="settings-linear-block">
-          <div class="stark-row link-row">
-            <div class="row-label">
-              <h3>Profile name and icon</h3>
-            </div>
-            <i data-lucide="chevron-right" class="arrow-indicator"></i>
-          </div>
-
-          <div class="stark-row link-row">
-            <div class="row-label">
-              <h3>Import bookmarks and settings</h3>
-            </div>
-            <i data-lucide="chevron-right" class="arrow-indicator"></i>
-          </div>
-
-          <div class="stark-row">
-            <div class="row-label">
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Default browser</h3>
               <p>Bind this application instance as your primary system default browser.</p>
             </div>
-            <button class="stark-action-btn">Make default</button>
+            <button class="settings-btn">Make default</button>
           </div>
-        </div>
 
-        <div class="settings-linear-block">
-          <span class="block-header-label">On startup</span>
-          <div class="radio-stack">
-            <div class="stark-radio-row">
-              <input type="radio" id="start-new" name="startup_mode" value="newtab" />
-              <label htmlFor="start-new">Open the New tab page</label>
+          <div class="settings-row">
+            <div class="settings-label">
+              <h3>On startup</h3>
             </div>
-            <div class="stark-radio-row">
-              <input type="radio" id="start-resume" name="startup_mode" value="resume" checked />
-              <label htmlFor="start-resume">Continue where you left off</label>
+            <div class="radio-stack">
+              <div class="radio-row">
+                <input type="radio" id="start-new" name="startup_mode" value="newtab" />
+                <label for="start-new">Open the New tab page</label>
+              </div>
+              <div class="radio-row">
+                <input type="radio" id="start-resume" name="startup_mode" value="resume" checked />
+                <label for="start-resume">Continue where you left off</label>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Appearance Section -->
       <section id="appearance" class="settings-section">
-        <h1 class="view-title">Appearance</h1>
+        <h2 class="section-title">Appearance</h2>
         
-        <div class="settings-linear-block">
-          <span class="block-header-label">Theme Interface</span>
-          <div class="radio-stack">
-            <div class="stark-radio-row">
-              <input type="radio" id="theme-light" name="theme" value="light" />
-              <label for="theme-light">Light Mode</label>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
+              <h3>Theme</h3>
             </div>
-            <div class="stark-radio-row">
-              <input type="radio" id="theme-dark" name="theme" value="dark" checked />
-              <label for="theme-dark">Dark Mode</label>
-            </div>
-            <div class="stark-radio-row">
-              <input type="radio" id="theme-system" name="theme" value="system" />
-              <label for="theme-system">System Preset</label>
+            <div class="radio-stack">
+              <div class="radio-row">
+                <input type="radio" id="theme-light" name="theme" value="light" />
+                <label for="theme-light">Light Mode</label>
+              </div>
+              <div class="radio-row">
+                <input type="radio" id="theme-dark" name="theme" value="dark" checked />
+                <label for="theme-dark">Dark Mode</label>
+              </div>
+              <div class="radio-row">
+                <input type="radio" id="theme-system" name="theme" value="system" />
+                <label for="theme-system">System Preset</label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Font size</h3>
               <p>Default rendering scale for web page text configurations.</p>
             </div>
@@ -137,11 +119,11 @@
             </div>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Default zoom</h3>
             </div>
-            <select id="zoom-select" name="default_zoom" class="stark-select">
+            <select id="zoom-select" name="default_zoom" class="settings-select">
               <option value="75">75%</option>
               <option value="90">90%</option>
               <option value="100" selected>100%</option>
@@ -150,11 +132,11 @@
             </select>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Show bookmarks bar</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="bookmarks-bar-toggle" name="show_bookmarks_bar"/>
               <span class="slider"></span>
             </label>
@@ -162,72 +144,72 @@
         </div>
       </section>
 
+      <!-- Privacy Section -->
       <section id="privacy" class="settings-section">
-        <h1 class="view-title">Privacy & security</h1>
+        <h2 class="section-title">Privacy & security</h2>
         
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Block ads</h3>
               <p>Prevent known intrusive ad scripts from injecting code layers.</p>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="block-ads-toggle" name="block_ads" checked/>
               <span class="slider"></span>
             </label>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Block trackers</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="block-trackers-toggle" name="block_trackers" checked/>
               <span class="slider"></span>
             </label>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Upgrade to HTTPS automatically</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="https-upgrade-toggle" name="https_upgrade" checked/>
               <span class="slider"></span>
             </label>
           </div>
-        </div>
 
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Clear data on exit</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="clear-exit-toggle" name="clear_on_exit"/>
               <span class="slider"></span>
             </label>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Clear browsing data now</h3>
               <p>Purge local storage cookies, network cache records, and user session history.</p>
             </div>
-            <button class="stark-action-btn destructive" id="clear-data-btn">Clear data</button>
+            <button class="settings-btn destructive" id="clear-data-btn">Clear data</button>
           </div>
         </div>
       </section>
 
+      <!-- Search Section -->
       <section id="search" class="settings-section">
-        <h1 class="view-title">Search engine</h1>
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+        <h2 class="section-title">Search engine</h2>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Default search engine</h3>
               <p>Engine index target utilized for queries written into the address input bar.</p>
             </div>
-            <select id="search-engine-select" name="search_engine" class="stark-select">
+            <select id="search-engine-select" name="search_engine" class="settings-select">
               <option value="https://search.brave.com/search?q=">Brave Search</option>
               <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
               <option value="https://www.google.com/search?q=">Google</option>
@@ -235,33 +217,34 @@
             </select>
           </div>
 
-          <div id="custom-engine-field" class="stark-row" style="display:none">
-            <div class="row-label">
+          <div id="custom-engine-field" class="settings-row" style="display:none">
+            <div class="settings-label">
               <h3>Custom Engine URL</h3>
             </div>
-            <input type="url" class="stark-text-input" id="custom-engine-input" placeholder="https://example.com/search?q=%s"/>
+            <input type="url" class="settings-input" id="custom-engine-input" placeholder="https://example.com/search?q=%s"/>
           </div>
         </div>
       </section>
 
+      <!-- Downloads Section -->
       <section id="downloads" class="settings-section">
-        <h1 class="view-title">Downloads</h1>
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+        <h2 class="section-title">Downloads</h2>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Save location</h3>
             </div>
             <div class="inline-group">
-              <input type="text" class="stark-text-input" id="download-path-input" name="download_path" value="~/Downloads" readonly/>
-              <button class="stark-action-btn" id="choose-download-dir">Browse</button>
+              <input type="text" class="settings-input" id="download-path-input" name="download_path" value="~/Downloads" readonly/>
+              <button class="settings-btn" id="choose-download-dir">Browse</button>
             </div>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Always ask where to save each file</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="ask-download-toggle" name="ask_download_location"/>
               <span class="slider"></span>
             </label>
@@ -269,24 +252,25 @@
         </div>
       </section>
 
+      <!-- Passwords Section -->
       <section id="passwords" class="settings-section">
-        <h1 class="view-title">Passwords</h1>
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+        <h2 class="section-title">Passwords</h2>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Save passwords</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="save-passwords-toggle" name="save_passwords" checked/>
               <span class="slider"></span>
             </label>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Auto-fill password entries</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="autofill-passwords-toggle" name="autofill_passwords" checked/>
               <span class="slider"></span>
             </label>
@@ -294,24 +278,25 @@
         </div>
       </section>
 
+      <!-- Performance Section -->
       <section id="performance" class="settings-section">
-        <h1 class="view-title">Performance</h1>
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+        <h2 class="section-title">Performance</h2>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Hardware acceleration</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="hw-accel-toggle" name="hardware_acceleration" checked/>
               <span class="slider"></span>
             </label>
           </div>
 
-          <div class="stark-row">
-            <div class="row-label">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Memory saver node routines</h3>
             </div>
-            <label class="stark-switch">
+            <label class="settings-switch">
               <input type="checkbox" id="memory-saver-toggle" name="memory_saver"/>
               <span class="slider"></span>
             </label>
@@ -319,15 +304,16 @@
         </div>
       </section>
 
+      <!-- About Section -->
       <section id="about" class="settings-section">
-        <h1 class="view-title">About</h1>
-        <div class="settings-linear-block">
-          <div class="stark-row">
-            <div class="row-label">
+        <h2 class="section-title">About</h2>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div class="settings-label">
               <h3>Open Browser</h3>
               <p>Version 1.0.0 (Core Engine WebKitGTK)</p>
             </div>
-            <button class="stark-action-btn" id="check-update-btn">Check for updates</button>
+            <button class="settings-btn" id="check-update-btn">Check for updates</button>
           </div>
         </div>
       </section>
@@ -336,7 +322,7 @@
   </main>
 </div>
 
-<div class="stark-toast" id="save-toast">Saved</div>
+<div class="toast" id="save-toast">Saved</div>
 
 <script src="script.js"></script>
 </body>
