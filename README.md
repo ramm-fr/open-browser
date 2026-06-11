@@ -20,9 +20,10 @@ Built on GTK4 and WebKitGTK, Open Browser combines a clean, distraction-free int
 - **Private Mode** — Full private browsing with per-window isolation.
 - **Hardware Acceleration** — GPU compositing via WebKit when available.
 - **Search Engines** — Brave Search default, configurable to any engine.
-- **Glassmorphism UI** — Modern frosted glass effect with gradient backgrounds and blur filters.
-- **Liquid Glass Components** — All UI elements feature beautiful glass styling including tabs, settings, search bar, and scrollbars.
-- **Theme Support** — Light and dark mode with automatic system preference detection.
+- **Minimal Black/White UI** — Modern minimalist design with pure black and white colors.
+- **Clean Components** — All UI elements feature clean, sharp styling including tabs, settings, search bar, and scrollbars.
+- **Modern Fonts** — Inter font family for a clean, modern reading experience.
+- **Full-Screen Design** — Immersive browsing experience with minimal chrome.
 
 ---
 
@@ -30,7 +31,7 @@ Built on GTK4 and WebKitGTK, Open Browser combines a clean, distraction-free int
 
 ![Open Browser Screenshot](assets/poster.svg)
 
-> _Glassmorphism UI with gradient backgrounds and frosted glass effects_
+> _Minimal black/white UI with clean, sharp design_
 
 ---
 

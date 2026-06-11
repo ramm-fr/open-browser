@@ -79,110 +79,97 @@ std::string internal_to_file_uri(const std::string& url) {
 
 // Inline GTK4 CSS theme for the browser chrome.
 constexpr const char* kBrowserCSS = R"CSS(
-/* ── Open Browser Chrome Theme ────────────────────────────── */
+/* ── Open Browser Chrome Theme - Minimal Black/White ────────────────────────────── */
 
 window.open-browser-window {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
 }
 
 headerbar {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
-                inset 0 -1px 0 0 rgba(255, 255, 255, 0.2);
-    padding: 4px 8px;
-    min-height: 48px;
+    background: #000000;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0;
+    min-height: 40px;
 }
 
 headerbar button {
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #1a1a1a;
+    background: #000000;
+    padding: 8px;
     color: #ffffff;
-    transition: all 150ms ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 120ms ease;
 }
 
 headerbar button:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: #1a1a1a;
+    border-color: #ffffff;
 }
 
 headerbar button:active {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(0);
+    background: #ffffff;
+    color: #000000;
 }
 
 headerbar button:disabled {
-    color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.05);
+    color: #333333;
+    background: #000000;
 }
 
 /* Address bar */
 entry#address-bar {
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    padding: 6px 16px;
-    font-size: 14px;
-    min-width: 280px;
-    transition: all 160ms ease;
+    border-radius: 0;
+    border: 1px solid #1a1a1a;
+    background: #0a0a0a;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-width: 300px;
+    transition: all 140ms ease;
     color: #ffffff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
 }
 
 entry#address-bar:focus {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2), 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: #ffffff;
+    background: #000000;
 }
 
 /* Tab bar */
 box#tab-bar {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 3px 4px 0 4px;
-    min-height: 36px;
+    background: #000000;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0;
+    min-height: 32px;
 }
 
 /* Outer wrapper per tab: [switch-btn][close-btn] */
 box.tab-outer {
-    border-radius: 12px 12px 0 0;
-    margin-right: 2px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    transition: all 150ms ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0;
+    margin-right: 0;
+    background: #000000;
+    transition: all 120ms ease;
+    border: 1px solid transparent;
 }
 
 box.tab-outer.active-tab-outer {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #0a0a0a;
+    border-bottom: 2px solid #ffffff;
 }
 
 button.tab-button {
-    border-radius: 12px 12px 0 0;
+    border-radius: 0;
     border: none;
     background: transparent;
-    padding: 5px 10px;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.8);
-    min-width: 60px;
-    transition: all 150ms ease;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #666666;
+    min-width: 80px;
+    transition: all 120ms ease;
 }
 
 button.tab-button:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #0a0a0a;
     color: #ffffff;
 }
 
@@ -193,16 +180,16 @@ button.tab-button.active-tab {
 }
 
 button.tab-close {
-    border-radius: 8px;
+    border-radius: 2px;
     border: none;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 4px 5px;
-    margin: 4px 3px 0 0;
+    background: transparent;
+    padding: 2px 4px;
+    margin: 4px 2px 0 0;
     opacity: 0;
-    transition: all 150ms ease;
-    min-width: 22px;
-    min-height: 22px;
-    color: rgba(255, 255, 255, 0.8);
+    transition: all 120ms ease;
+    min-width: 16px;
+    min-height: 16px;
+    color: #666666;
 }
 
 box.tab-outer:hover button.tab-close,
@@ -211,44 +198,46 @@ box.tab-outer.active-tab-outer button.tab-close {
 }
 
 button.tab-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
+    background: #ffffff;
+    color: #000000;
 }
 
 button#new-tab-button {
-    border-radius: 50%;
-    min-width: 28px;
-    min-height: 28px;
+    border-radius: 2px;
+    min-width: 24px;
+    min-height: 24px;
     padding: 0;
-    font-size: 18px;
-    margin-left: 4px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 14px;
+    margin-left: 8px;
+    background: #000000;
+    border: 1px solid #1a1a1a;
     color: #ffffff;
+}
+
+button#new-tab-button:hover {
+    background: #ffffff;
+    color: #000000;
 }
 
 /* Window control buttons */
 button.wctl-btn {
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 3px;
-    min-width: 20px;
-    min-height: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    opacity: 0.8;
-    transition: all 150ms ease;
+    border-radius: 2px;
+    border: 1px solid #1a1a1a;
+    padding: 4px;
+    min-width: 24px;
+    min-height: 24px;
+    background: #000000;
+    opacity: 1;
+    transition: all 120ms ease;
     color: #ffffff;
 }
 button.wctl-btn:hover {
-    opacity: 1;
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.2);
+    background: #ffffff;
+    color: #000000;
 }
-button.wctl-close:hover { background: rgba(255,59,48,0.3); color: #ffffff; }
-button.wctl-min:hover   { background: rgba(255,149,0,0.3);  color: #ffffff; }
-button.wctl-max:hover   { background: rgba(40,205,65,0.3);  color: #ffffff; }
+button.wctl-close:hover { background: #ffffff; color: #000000; }
+button.wctl-min:hover   { background: #ffffff; color: #000000; }
+button.wctl-max:hover   { background: #ffffff; color: #000000; }
 
 /* Ensure window controls are on the right side */
 headerbar > box:last-child {
@@ -257,24 +246,20 @@ headerbar > box:last-child {
 
 /* Private mode indicator */
 window.private-mode headerbar {
-    background: rgba(26, 26, 46, 0.8);
-    backdrop-filter: blur(20px);
+    background: #000000;
     color: #ffffff;
 }
 window.private-mode entry#address-bar {
-    background: rgba(42, 42, 62, 0.6);
-    backdrop-filter: blur(15px);
-    border-color: rgba(80, 80, 160, 0.5);
-    color: #e0e0e0;
+    background: #0a0a0a;
+    border-color: #1a1a1a;
+    color: #ffffff;
 }
 window.private-mode button.tab-button.active-tab {
-    background: rgba(42, 42, 62, 0.6);
-    backdrop-filter: blur(15px);
-    color: #e0e0e0;
+    background: #0a0a0a;
+    color: #ffffff;
 }
 window.private-mode box#tab-bar {
-    background: rgba(21, 21, 37, 0.6);
-    backdrop-filter: blur(15px);
+    background: #000000;
 }
 )CSS";
 
