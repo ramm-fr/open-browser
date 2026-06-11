@@ -20,12 +20,17 @@ Built on GTK4 and WebKitGTK, Open Browser combines a clean, distraction-free int
 - **Private Mode** — Full private browsing with per-window isolation.
 - **Hardware Acceleration** — GPU compositing via WebKit when available.
 - **Search Engines** — Brave Search default, configurable to any engine.
+- **Glassmorphism UI** — Modern frosted glass effect with gradient backgrounds and blur filters.
+- **Liquid Glass Components** — All UI elements feature beautiful glass styling including tabs, settings, search bar, and scrollbars.
+- **Theme Support** — Light and dark mode with automatic system preference detection.
 
 ---
 
 ## Screenshots
 
-> _Screenshots coming soon. Contributions welcome!_
+![Open Browser Screenshot](assets/poster.svg)
+
+> _Glassmorphism UI with gradient backgrounds and frosted glass effects_
 
 ---
 
@@ -124,6 +129,56 @@ sudo cmake --install build
 
 ---
 
+## Uninstallation
+
+### From .deb Package
+
+```bash
+sudo apt remove open-browser
+sudo apt autoremove
+```
+
+To remove configuration files:
+
+```bash
+sudo apt purge open-browser
+rm -rf ~/.config/open-browser
+rm -rf ~/.local/share/open-browser
+```
+
+### From Source
+
+```bash
+sudo cmake --install build --component Uninstall
+rm -rf ~/.config/open-browser
+rm -rf ~/.local/share/open-browser
+```
+
+---
+
+## Updating
+
+### From .deb Package
+
+```bash
+# Download the latest version
+wget https://github.com/ramm-fr/open-browser/releases/latest/download/open-browser_1.1.0_amd64.deb
+
+# Install the update (will automatically upgrade)
+sudo apt install ./open-browser_1.1.0_amd64.deb
+```
+
+### From Source
+
+```bash
+cd open-browser
+git pull origin main
+./build.sh
+sudo cmake --install build
+```
+
+---
+
 ## Running
 
 ```bash
@@ -161,6 +216,14 @@ open-browser --version
 | `Ctrl+J` | Downloads |
 | `Ctrl+,` | Settings |
 | `F11` | Fullscreen |
+
+---
+
+---
+
+## Poster
+
+Check out the official [Open Browser Poster](assets/poster.svg) showcasing the beautiful glassmorphism UI design.
 
 ---
 

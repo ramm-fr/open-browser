@@ -1,14 +1,14 @@
 :root {
-  --color-bg:          #ffffff;
-  --color-surface:     #f5f5f7;
-  --color-border:      #e5e7eb;
-  --color-text:        #111827;
-  --color-text-muted:  #6b7280;
-  --color-text-faint:  #9ca3af;
-  --color-primary:     #0066ff;
-  --color-primary-bg:  rgba(0,102,255,0.08);
-  --radius-sm:         8px;
-  --radius-md:         12px;
+  --color-bg:          linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --color-surface:     rgba(255, 255, 255, 0.15);
+  --color-border:      rgba(255, 255, 255, 0.3);
+  --color-text:        #ffffff;
+  --color-text-muted:  rgba(255, 255, 255, 0.8);
+  --color-text-faint:  rgba(255, 255, 255, 0.6);
+  --color-primary:     #60a5fa;
+  --color-primary-bg:  rgba(96, 165, 250, 0.15);
+  --radius-sm:         12px;
+  --radius-md:         16px;
   --font:              'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --transition:        140ms ease;
 }
@@ -22,6 +22,7 @@ body {
   height: 100vh;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+  backdrop-filter: blur(10px);
 }
 
 .page {
@@ -75,25 +76,29 @@ body {
   border-radius: 20px;
   padding: 7px 14px 7px 32px;
   background: var(--color-surface);
+  backdrop-filter: blur(15px);
   color: var(--color-text);
   outline: none;
   width: 220px;
   transition: border-color var(--transition), box-shadow var(--transition);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .search-input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0,102,255,0.12);
-  background: var(--color-bg);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2), 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .view-toggle {
   display: flex;
   gap: 2px;
   background: var(--color-surface);
+  backdrop-filter: blur(15px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 2px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .view-btn {
@@ -129,12 +134,15 @@ body {
 .folder-sidebar {
   width: 200px;
   flex-shrink: 0;
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
   border-right: 1px solid var(--color-border);
   padding: 12px 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .folder-list {
@@ -164,11 +172,13 @@ body {
 
 .folder-item svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-.folder-item:hover { background: var(--color-surface); color: var(--color-text); }
+.folder-item:hover { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); color: var(--color-text); }
 .folder-item.active {
   background: var(--color-primary-bg);
+  backdrop-filter: blur(15px);
   color: var(--color-primary);
   font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .add-folder-btn {
@@ -217,7 +227,8 @@ body {
 
 /* Grid card */
 .bookmark-card {
-  background: var(--color-bg);
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 16px;
@@ -230,12 +241,13 @@ body {
   transition: box-shadow var(--transition), transform var(--transition),
               border-color var(--transition);
   position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
 
 .bookmark-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
-  border-color: #d1d5db;
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .bookmark-favicon {
@@ -303,7 +315,7 @@ body {
   position: relative;
 }
 
-.bookmark-row:hover { background: var(--color-surface); }
+.bookmark-row:hover { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); }
 
 .bookmark-row-favicon {
   width: 18px;
