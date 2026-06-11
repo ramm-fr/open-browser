@@ -164,8 +164,25 @@ rm -rf ~/.local/share/open-browser
 # Download the latest version
 wget https://github.com/ramm-fr/open-browser/releases/latest/download/open-browser_1.1.0_amd64.deb
 
-# Install the update (will automatically upgrade)
-sudo apt install ./open-browser_1.1.0_amd64.deb
+# Install the update using dpkg
+sudo dpkg -i open-browser_1.1.0_amd64.deb
+
+# Fix any missing dependencies
+sudo apt-get install -f
+```
+
+Alternatively, if the above doesn't work:
+
+```bash
+# Download the latest version
+wget https://github.com/ramm-fr/open-browser/releases/latest/download/open-browser_1.1.0_amd64.deb
+
+# Remove old version first
+sudo apt remove open-browser
+
+# Install new version
+sudo dpkg -i open-browser_1.1.0_amd64.deb
+sudo apt-get install -f
 ```
 
 ### From Source
