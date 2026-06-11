@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.openbrowser.Browser</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+
+  <name>Open Browser</name>
+  <summary>A modern, minimalist, privacy-focused web browser for Linux</summary>
+
+  <description>
+    <p>
+      Open Browser is a fast, clean web browser built on GTK4 and WebKitGTK.
+      It puts privacy first with built-in ad blocking, tracker protection,
+      and HTTPS upgrades — with no telemetry.
+    </p>
+    <p>Features include:</p>
+    <ul>
+      <li>Clean, distraction-free interface with full tab management</li>
+      <li>Built-in ad and tracker blocker</li>
+      <li>Integrated password manager backed by the system keyring</li>
+      <li>Bookmark and history management</li>
+      <li>Download manager with pause and resume</li>
+      <li>Private browsing mode with ephemeral storage</li>
+      <li>Hardware-accelerated rendering via WebKit</li>
+      <li>Fully configurable via an in-browser settings UI</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">io.openbrowser.Browser.desktop</launchable>
+
+  <url type="homepage">https://openbrowser.io</url>
+  <url type="bugtracker">https://github.com/openbrowser/open-browser/issues</url>
+  <url type="help">https://github.com/openbrowser/open-browser/wiki</url>
+  <url type="donation">https://opencollective.com/open-browser</url>
+  <url type="vcs-browser">https://github.com/openbrowser/open-browser</url>
+
+  <developer id="io.openbrowser">
+    <name>Open Browser Contributors</name>
+  </developer>
+
+  <content_rating type="oars-1.1" />
+
+  <releases>
+    <release version="1.0.0" date="2024-01-01">
+      <description>
+        <p>Initial release of Open Browser.</p>
+      </description>
+    </release>
+  </releases>
+
+  <categories>
+    <category>Network</category>
+    <category>WebBrowser</category>
+  </categories>
+
+  <keywords>
+    <keyword>browser</keyword>
+    <keyword>web</keyword>
+    <keyword>internet</keyword>
+    <keyword>privacy</keyword>
+    <keyword>webkit</keyword>
+  </keywords>
+
+  <provides>
+    <binary>open-browser</binary>
+    <mediatype>text/html</mediatype>
+    <mediatype>text/xml</mediatype>
+    <mediatype>application/xhtml+xml</mediatype>
+    <mediatype>x-scheme-handler/http</mediatype>
+    <mediatype>x-scheme-handler/https</mediatype>
+    <mediatype>x-scheme-handler/ftp</mediatype>
+  </provides>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Open Browser main window with new tab page</caption>
+      <image>https://openbrowser.io/screenshots/newtab.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Settings page</caption>
+      <image>https://openbrowser.io/screenshots/settings.png</image>
+    </screenshot>
+  </screenshots>
+</component>

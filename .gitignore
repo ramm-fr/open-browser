@@ -1,0 +1,80 @@
+# Build output
+build/
+out/
+dist/
+.cache/
+
+# Compiled objects
+*.o
+*.a
+*.so
+*.so.*
+*.dylib
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Ninja
+.ninja_deps
+.ninja_log
+build.ninja
+
+# Node / npm (for dev tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package artifacts
+*.deb
+*.rpm
+*.AppImage
+*.flatpak
+*.snap
+*.tar.gz
+*.tar.xz
+*.zip
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# Test output
+Testing/
+test_results/
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Clangd / LSP
+.clangd/
+.clang-tidy
+
+# Python cache (for tooling)
+__pycache__/
+*.pyc
+
+# Temporary files
+*.tmp
+*.bak
+
+# Credentials / secrets
+*.key
+*.pem
+*.p12
+secrets.json

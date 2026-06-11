@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+# Debian rules file for open-browser
+
+%:
+	dh $@ --buildsystem=cmake
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_TESTS=OFF \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-G Ninja
+
+override_dh_auto_build:
+	dh_auto_build -- -j$(shell nproc)
+
+override_dh_auto_test:
+	# Tests require a display; skip in headless Debian build
+	:

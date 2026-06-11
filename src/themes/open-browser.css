@@ -1,0 +1,297 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   Open Browser — GTK4 Theme
+   Primary:   #0066FF   (bright blue)
+   Surface:   #FFFFFF
+   Bg:        #F5F5F5
+   Border:    #E0E0E0
+   Text:      #111111
+   Muted:     #666666
+   Radius:    8px (buttons), 24px (address bar)
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Root window ─────────────────────────────────────────────────────────── */
+
+window.open-browser-window {
+    background-color: #f5f5f5;
+    color: #111111;
+}
+
+/* ── Header bar ──────────────────────────────────────────────────────────── */
+
+headerbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    padding: 4px 12px;
+    min-height: 52px;
+}
+
+headerbar .title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+}
+
+/* ── Navigation buttons ──────────────────────────────────────────────────── */
+
+headerbar button {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 9px;
+    color: #555555;
+    min-width: 0;
+    min-height: 0;
+    transition: background 130ms ease, color 130ms ease;
+}
+
+headerbar button:hover {
+    background: rgba(0, 0, 0, 0.07);
+    color: #111111;
+}
+
+headerbar button:active {
+    background: rgba(0, 0, 0, 0.14);
+    color: #111111;
+}
+
+headerbar button:disabled {
+    color: #c0c0c0;
+    opacity: 0.6;
+}
+
+headerbar button image {
+    color: inherit;
+}
+
+/* ── Address / URL bar ───────────────────────────────────────────────────── */
+
+entry#address-bar {
+    background-color: #f5f5f5;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 24px;
+    padding: 7px 18px;
+    font-size: 14px;
+    color: #111111;
+    caret-color: #0066FF;
+    min-width: 260px;
+    transition: background 160ms ease,
+                border-color 160ms ease,
+                box-shadow 160ms ease;
+}
+
+entry#address-bar:focus {
+    background-color: #ffffff;
+    border-color: #0066FF;
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+    outline: none;
+}
+
+entry#address-bar:hover:not(:focus) {
+    background-color: #eeeeee;
+    border-color: #cccccc;
+}
+
+entry#address-bar text {
+    color: #111111;
+}
+
+/* ── Menu button ─────────────────────────────────────────────────────────── */
+
+headerbar menubutton button {
+    border-radius: 8px;
+}
+
+/* ── Popover / menu ──────────────────────────────────────────────────────── */
+
+popover.menu {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    padding: 4px;
+}
+
+popover.menu modelbutton {
+    border-radius: 7px;
+    padding: 9px 14px;
+    font-size: 14px;
+    color: #222222;
+    transition: background 100ms ease;
+}
+
+popover.menu modelbutton:hover {
+    background: rgba(0, 102, 255, 0.08);
+    color: #0066FF;
+}
+
+/* ── Tab bar ─────────────────────────────────────────────────────────────── */
+
+scrolledwindow > box#tab-bar {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 4px 6px 0 6px;
+    min-height: 38px;
+}
+
+button.tab-button {
+    background: transparent;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 5px 14px;
+    font-size: 13px;
+    color: #666666;
+    min-width: 80px;
+    max-width: 220px;
+    margin-right: 2px;
+    transition: background 120ms ease, color 120ms ease;
+}
+
+button.tab-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333333;
+}
+
+button.tab-button.active-tab {
+    background: #ffffff;
+    color: #111111;
+    font-weight: 500;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.07);
+}
+
+button.tab-close {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    min-width: 18px;
+    min-height: 18px;
+    padding: 3px;
+    font-size: 9px;
+    color: #888888;
+    opacity: 0.6;
+    transition: opacity 120ms ease, background 120ms ease;
+}
+
+button.tab-close:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.12);
+    color: #333333;
+}
+
+/* ── Spinner (loading indicator in tabs) ────────────────────────────────── */
+
+spinner {
+    color: #0066FF;
+}
+
+/* ── WebView area ────────────────────────────────────────────────────────── */
+
+webkitwebview {
+    background-color: #ffffff;
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────────────────── */
+
+scrollbar {
+    background: transparent;
+}
+
+scrollbar slider {
+    background: rgba(0, 0, 0, 0.20);
+    border-radius: 4px;
+    min-width: 6px;
+    min-height: 6px;
+    margin: 2px;
+    transition: background 150ms ease;
+}
+
+scrollbar slider:hover {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────────────────── */
+
+tooltip {
+    background: #222222;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Dialog ──────────────────────────────────────────────────────────────── */
+
+dialog {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+}
+
+dialog .dialog-action-box button {
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+dialog .dialog-action-box button.suggested-action {
+    background-color: #0066FF;
+    color: #ffffff;
+    border: none;
+}
+
+dialog .dialog-action-box button.suggested-action:hover {
+    background-color: #0052cc;
+}
+
+dialog .dialog-action-box button.destructive-action {
+    background-color: #ff3b30;
+    color: #ffffff;
+    border: none;
+}
+
+/* ── Private / incognito mode override ─────────────────────────────────── */
+
+window.open-browser-window.private-mode {
+    background-color: #1a1a2e;
+}
+
+window.open-browser-window.private-mode headerbar {
+    background-color: #1e1e3a;
+    border-bottom-color: #3a3a5c;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+}
+
+window.open-browser-window.private-mode headerbar button {
+    color: #b0b0cc;
+}
+
+window.open-browser-window.private-mode headerbar button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0e0ff;
+}
+
+window.open-browser-window.private-mode entry#address-bar {
+    background-color: #2a2a4a;
+    border-color: #5a5a8a;
+    color: #d0d0f0;
+}
+
+window.open-browser-window.private-mode entry#address-bar:focus {
+    border-color: #7070cc;
+    box-shadow: 0 0 0 3px rgba(100, 100, 200, 0.25);
+}
+
+window.open-browser-window.private-mode scrolledwindow > box#tab-bar {
+    background-color: #14142a;
+    border-bottom-color: #3a3a5c;
+}
+
+window.open-browser-window.private-mode button.tab-button {
+    color: #8080b0;
+}
+
+window.open-browser-window.private-mode button.tab-button.active-tab {
+    background: #2a2a4a;
+    color: #d0d0f0;
+}

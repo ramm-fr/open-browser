@@ -1,0 +1,98 @@
+# GN build file for Open Browser Chromium integration layer
+# This file is used when building against Chromium's build system
+# for the Chromium content API integration layer.
+#
+# Normal builds use CMakeLists.txt instead.
+
+declare_args() {
+  open_browser_version = "1.0.0"
+  open_browser_use_gtk4 = true
+  open_browser_use_webkitgtk = true
+  open_browser_enable_tests = true
+}
+
+config("open_browser_config") {
+  include_dirs = [ "src" ]
+  cflags_cc = [
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+  ]
+  defines = [ "OPEN_BROWSER_VERSION=\"$open_browser_version\"" ]
+}
+
+config("open_browser_gtk4_config") {
+  pkg_deps = [
+    "gtk4",
+    "webkit2gtk-4.1",
+    "libsoup-3.0",
+    "glib-2.0",
+    "gio-2.0",
+    "libsecret-1",
+  ]
+}
+
+source_set("open_browser_core") {
+  sources = [
+    "src/url_resolver.cpp",
+    "src/url_resolver.h",
+    "src/settings_manager.cpp",
+    "src/settings_manager.h",
+    "src/bookmark_manager.cpp",
+    "src/bookmark_manager.h",
+    "src/history_manager.cpp",
+    "src/history_manager.h",
+    "src/download_manager.cpp",
+    "src/download_manager.h",
+    "src/password_manager.cpp",
+    "src/password_manager.h",
+    "src/ad_blocker.cpp",
+    "src/ad_blocker.h",
+  ]
+  configs += [
+    ":open_browser_config",
+    ":open_browser_gtk4_config",
+  ]
+}
+
+source_set("open_browser_ui") {
+  sources = [
+    "src/browser_window.cpp",
+    "src/browser_window.h",
+  ]
+  deps = [ ":open_browser_core" ]
+  configs += [
+    ":open_browser_config",
+    ":open_browser_gtk4_config",
+  ]
+}
+
+executable("open-browser") {
+  sources = [ "src/main.cpp" ]
+  deps = [
+    ":open_browser_core",
+    ":open_browser_ui",
+  ]
+  configs += [
+    ":open_browser_config",
+    ":open_browser_gtk4_config",
+  ]
+}
+
+if (open_browser_enable_tests) {
+  test("open_browser_unittests") {
+    sources = [
+      "tests/test_url_resolver.cpp",
+      "tests/test_bookmark_manager.cpp",
+      "tests/test_history_manager.cpp",
+      "tests/test_settings_manager.cpp",
+      "tests/test_ad_blocker.cpp",
+    ]
+    deps = [
+      ":open_browser_core",
+      "//testing/gtest",
+      "//testing/gtest:gtest_main",
+    ]
+    configs += [ ":open_browser_config" ]
+  }
+}

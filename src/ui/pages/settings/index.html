@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Settings — Open Browser</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══ Shell ════════════════════════════════════════════════════════════ -->
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" class="brand-globe" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+      <span>Open Browser</span>
+    </div>
+
+    <p class="sidebar-heading">Settings</p>
+
+    <nav class="nav">
+      <button class="nav-btn active" data-section="appearance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        Appearance
+      </button>
+      <button class="nav-btn" data-section="privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Privacy & Security
+      </button>
+      <button class="nav-btn" data-section="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+      <button class="nav-btn" data-section="downloads">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Downloads
+      </button>
+      <button class="nav-btn" data-section="passwords">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Passwords
+      </button>
+      <button class="nav-btn" data-section="performance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Performance
+      </button>
+      <button class="nav-btn" data-section="about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        About
+      </button>
+    </nav>
+
+    <!-- Dark/Light toggle at bottom of sidebar -->
+    <div class="sidebar-footer">
+      <div class="theme-switch-row">
+        <span class="theme-switch-label">Dark mode</span>
+        <label class="toggle" for="global-dark-toggle" aria-label="Toggle dark mode">
+          <input type="checkbox" id="global-dark-toggle"/>
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main" id="main">
+
+    <!-- ── APPEARANCE ─────────────────────────────────────────────────── -->
+    <section id="appearance" class="section active">
+      <div class="page-header">
+        <h1 class="page-title">Appearance</h1>
+        <p class="page-desc">Customize how Open Browser looks and feels.</p>
+      </div>
+
+      <!-- Theme picker -->
+      <div class="group-label">Theme</div>
+      <div class="theme-cards" role="radiogroup" aria-label="Color theme">
+        <label class="theme-card" data-val="light">
+          <input type="radio" name="theme" value="light"/>
+          <div class="tc-preview tc-light">
+            <div class="tc-titlebar"></div>
+            <div class="tc-line w70"></div>
+            <div class="tc-line w50"></div>
+            <div class="tc-line w60"></div>
+          </div>
+          <div class="tc-footer">
+            <span class="tc-name">Light</span>
+            <span class="tc-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-val="dark">
+          <input type="radio" name="theme" value="dark"/>
+          <div class="tc-preview tc-dark">
+            <div class="tc-titlebar"></div>
+            <div class="tc-line w70"></div>
+            <div class="tc-line w50"></div>
+            <div class="tc-line w60"></div>
+          </div>
+          <div class="tc-footer">
+            <span class="tc-name">Dark</span>
+            <span class="tc-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-val="system">
+          <input type="radio" name="theme" value="system"/>
+          <div class="tc-preview tc-system">
+            <div class="tc-titlebar"></div>
+            <div class="tc-line w70"></div>
+            <div class="tc-line w50"></div>
+            <div class="tc-line w60"></div>
+          </div>
+          <div class="tc-footer">
+            <span class="tc-name">System</span>
+            <span class="tc-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </div>
+        </label>
+      </div>
+
+      <div class="group-label">Display</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Font size</span>
+            <span class="row-desc">Default size for web page text</span>
+          </div>
+          <div class="range-group">
+            <span class="range-num" id="font-size-output">16</span>
+            <span class="range-unit">px</span>
+            <input type="range" id="font-size-input" name="font_size" min="10" max="24" step="1" value="16"/>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Default zoom</span>
+            <span class="row-desc">Zoom level for all pages</span>
+          </div>
+          <select id="zoom-select" name="default_zoom" class="select">
+            <option value="75">75%</option>
+            <option value="90">90%</option>
+            <option value="100" selected>100%</option>
+            <option value="110">110%</option>
+            <option value="125">125%</option>
+            <option value="150">150%</option>
+          </select>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Show bookmarks bar</span>
+            <span class="row-desc">Display bookmarks below the address bar</span>
+          </div>
+          <label class="toggle" for="bookmarks-bar-toggle">
+            <input type="checkbox" id="bookmarks-bar-toggle" name="show_bookmarks_bar"/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRIVACY ────────────────────────────────────────────────────── -->
+    <section id="privacy" class="section">
+      <div class="page-header">
+        <h1 class="page-title">Privacy &amp; Security</h1>
+        <p class="page-desc">Control what is blocked and what data is kept.</p>
+      </div>
+
+      <div class="group-label">Protection</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Block ads</span>
+            <span class="row-desc">Block known advertising domains and scripts</span>
+          </div>
+          <label class="toggle" for="block-ads-toggle">
+            <input type="checkbox" id="block-ads-toggle" name="block_ads" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Block trackers</span>
+            <span class="row-desc">Prevent third-party tracking scripts</span>
+          </div>
+          <label class="toggle" for="block-trackers-toggle">
+            <input type="checkbox" id="block-trackers-toggle" name="block_trackers" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Upgrade to HTTPS</span>
+            <span class="row-desc">Automatically use secure connections</span>
+          </div>
+          <label class="toggle" for="https-upgrade-toggle">
+            <input type="checkbox" id="https-upgrade-toggle" name="https_upgrade" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="group-label">Data</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Clear data on exit</span>
+            <span class="row-desc">Delete cookies, history and cache when you quit</span>
+          </div>
+          <label class="toggle" for="clear-exit-toggle">
+            <input type="checkbox" id="clear-exit-toggle" name="clear_on_exit"/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Clear browsing data now</span>
+            <span class="row-desc">Delete all cookies, cache, history and saved data</span>
+          </div>
+          <button class="btn-danger" id="clear-data-btn">Clear data</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SEARCH ─────────────────────────────────────────────────────── -->
+    <section id="search" class="section">
+      <div class="page-header">
+        <h1 class="page-title">Search</h1>
+        <p class="page-desc">Choose your default search engine.</p>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Default search engine</span>
+            <span class="row-desc">Used from the address bar and new tab page</span>
+          </div>
+          <select id="search-engine-select" name="search_engine" class="select">
+            <option value="https://search.brave.com/search?q=">Brave Search</option>
+            <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+            <option value="https://www.google.com/search?q=">Google</option>
+            <option value="https://www.bing.com/search?q=">Bing</option>
+            <option value="custom">Custom…</option>
+          </select>
+        </div>
+        <div id="custom-divider" class="divider" style="display:none"></div>
+        <div id="custom-engine-field" class="row" style="display:none">
+          <div class="row-info">
+            <span class="row-title">Custom URL</span>
+            <span class="row-desc">Use <code>%s</code> as the query placeholder</span>
+          </div>
+          <input type="url" class="text-input" id="custom-engine-input" placeholder="https://example.com/search?q=%s"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DOWNLOADS ──────────────────────────────────────────────────── -->
+    <section id="downloads" class="section">
+      <div class="page-header">
+        <h1 class="page-title">Downloads</h1>
+        <p class="page-desc">Control where and how files are saved.</p>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Save location</span>
+            <span class="row-desc">Default folder for downloaded files</span>
+          </div>
+          <div class="inline-group">
+            <input type="text" class="text-input" id="download-path-input" name="download_path" readonly/>
+            <button class="btn-ghost" id="choose-download-dir">Browse…</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Always ask where to save</span>
+            <span class="row-desc">Show a dialog for every download</span>
+          </div>
+          <label class="toggle" for="ask-download-toggle">
+            <input type="checkbox" id="ask-download-toggle" name="ask_download_location"/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PASSWORDS ──────────────────────────────────────────────────── -->
+    <section id="passwords" class="section">
+      <div class="page-header">
+        <h1 class="page-title">Passwords</h1>
+        <p class="page-desc">Manage saved passwords and auto-fill.</p>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Save passwords</span>
+            <span class="row-desc">Offer to save passwords when you sign in</span>
+          </div>
+          <label class="toggle" for="save-passwords-toggle">
+            <input type="checkbox" id="save-passwords-toggle" name="save_passwords" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Auto-fill passwords</span>
+            <span class="row-desc">Fill in saved passwords automatically</span>
+          </div>
+          <label class="toggle" for="autofill-passwords-toggle">
+            <input type="checkbox" id="autofill-passwords-toggle" name="autofill_passwords" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Saved passwords</span>
+            <span class="row-desc" id="password-count-desc">No saved passwords</span>
+          </div>
+          <button class="btn-ghost" id="view-passwords-btn">View</button>
+        </div>
+      </div>
+      <div class="card" id="passwords-list-card" style="display:none">
+        <p class="empty-note" id="passwords-empty">No saved passwords.</p>
+        <div id="passwords-list"></div>
+      </div>
+    </section>
+
+    <!-- ── PERFORMANCE ────────────────────────────────────────────────── -->
+    <section id="performance" class="section">
+      <div class="page-header">
+        <h1 class="page-title">Performance</h1>
+        <p class="page-desc">Tune speed and memory usage.</p>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Hardware acceleration</span>
+            <span class="row-desc">Use GPU compositing — restart required</span>
+          </div>
+          <label class="toggle" for="hw-accel-toggle">
+            <input type="checkbox" id="hw-accel-toggle" name="hardware_acceleration" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Sleeping tabs</span>
+            <span class="row-desc">Suspend inactive background tabs after 10 min</span>
+          </div>
+          <label class="toggle" for="sleeping-tabs-toggle">
+            <input type="checkbox" id="sleeping-tabs-toggle" name="sleeping_tabs" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Memory saver</span>
+            <span class="row-desc">Limit memory when many tabs are open</span>
+          </div>
+          <label class="toggle" for="memory-saver-toggle">
+            <input type="checkbox" id="memory-saver-toggle" name="memory_saver"/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="row-info">
+            <span class="row-title">Smooth scrolling</span>
+            <span class="row-desc">Animate page scrolling</span>
+          </div>
+          <label class="toggle" for="smooth-scroll-toggle">
+            <input type="checkbox" id="smooth-scroll-toggle" name="smooth_scrolling" checked/>
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ──────────────────────────────────────────────────────── -->
+    <section id="about" class="section">
+      <div class="page-header">
+        <h1 class="page-title">About</h1>
+        <p class="page-desc">Version info and release details.</p>
+      </div>
+
+      <div class="about-hero">
+        <div class="about-logo-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+          </svg>
+        </div>
+        <div class="about-text">
+          <h2 class="about-name">Open Browser</h2>
+          <p class="about-version" id="about-version">Version 1.0.0</p>
+          <p class="about-tagline">Modern · Minimalist · Privacy-first</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row"><span class="row-title">Engine</span><span class="row-meta" id="webkit-version">WebKitGTK 2.52</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="row-title">Toolkit</span><span class="row-meta">GTK 4</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="row-title">License</span><span class="row-meta">Apache 2.0</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="row-title">Source</span><a href="https://github.com/openbrowser/open-browser" class="row-link">github.com/openbrowser/open-browser</a></div>
+      </div>
+
+      <div class="about-actions">
+        <button class="btn-primary" id="check-update-btn">Check for updates</button>
+        <a href="https://openbrowser.io/release-notes" class="btn-ghost">Release notes</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="save-toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+  Saved
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

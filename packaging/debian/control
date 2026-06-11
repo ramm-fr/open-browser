@@ -1,0 +1,46 @@
+Source: open-browser
+Section: web
+Priority: optional
+Maintainer: Open Browser Contributors <hello@openbrowser.io>
+Build-Depends: debhelper-compat (= 13),
+               cmake (>= 3.20),
+               ninja-build,
+               pkg-config,
+               libgtk-4-dev (>= 4.6),
+               libwebkitgtk-6.0-dev (>= 2.40),
+               libsoup-3.0-dev,
+               libglib2.0-dev,
+               libsecret-1-dev,
+               nlohmann-json3-dev,
+               libgtest-dev,
+               g++ (>= 11)
+Standards-Version: 4.6.2
+Homepage: https://openbrowser.io
+Vcs-Browser: https://github.com/openbrowser/open-browser
+Vcs-Git: https://github.com/openbrowser/open-browser.git
+Rules-Requires-Root: no
+
+Package: open-browser
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         libgtk-4-1 (>= 4.6),
+         libwebkitgtk-6.0-4 (>= 2.40),
+         libsoup-3.0-0,
+         libsecret-1-0
+Recommends: xdg-utils
+Suggests: open-browser-dbgsym
+Description: A modern, minimalist, privacy-focused web browser for Linux
+ Open Browser is a fast and clean web browser built on GTK4 and WebKitGTK.
+ It provides a distraction-free interface with strong privacy defaults:
+ built-in ad blocking, tracker protection, HTTPS upgrades, and no telemetry.
+ .
+ Features:
+  - Clean GTK4 native interface
+  - Full tab management with keyboard shortcuts
+  - Integrated ad and tracker blocker
+  - Password manager backed by the system keyring
+  - Bookmark and history management
+  - Download manager with pause/resume
+  - Private browsing mode
+  - Hardware-accelerated rendering

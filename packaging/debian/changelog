@@ -1,0 +1,13 @@
+open-browser (1.0.0-1) unstable; urgency=medium
+
+  * Initial release.
+  * Full GTK4 + WebKitGTK4 browser implementation.
+  * Built-in ad and tracker blocker.
+  * Password manager with libsecret keyring integration.
+  * Bookmark and history management.
+  * Download manager with pause/resume support.
+  * Private browsing mode.
+  * Beautiful new tab page with quick-access shortcuts.
+  * Full settings UI.
+
+ -- Open Browser Contributors <hello@openbrowser.io>  Wed, 01 Jan 2025 00:00:00 +0000

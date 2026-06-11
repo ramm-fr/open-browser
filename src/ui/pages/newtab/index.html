@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Tab — Open Browser</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+
+    <!-- Background gradient orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <!-- Header / Greeting -->
+    <header class="header">
+      <p class="greeting" id="greeting">Good morning</p>
+      <h1 class="date" id="date-display"></h1>
+    </header>
+
+    <!-- Search bar -->
+    <main class="main">
+      <form class="search-form" id="search-form" autocomplete="off">
+        <div class="search-container">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            class="search-input"
+            id="search-input"
+            placeholder="Search or enter address"
+            aria-label="Search or enter a web address"
+            autofocus
+          />
+          <button class="search-btn" type="submit" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Quick access shortcuts -->
+      <section class="shortcuts-section" aria-label="Quick access">
+        <div class="shortcuts-grid" id="shortcuts-grid">
+          <!-- Populated by script.js -->
+        </div>
+        <button class="add-shortcut-btn" id="add-shortcut-btn"
+                aria-label="Add shortcut" title="Add shortcut">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          <span>Add</span>
+        </button>
+      </section>
+    </main>
+
+    <!-- Recent history -->
+    <section class="history-section" id="history-section" aria-label="Recent history">
+      <h2 class="section-title">Recent</h2>
+      <div class="history-grid" id="history-grid">
+        <!-- Populated by script.js -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-brand">Open Browser</span>
+      <span class="footer-sep">·</span>
+      <a href="openbrowser://settings" class="footer-link">Settings</a>
+      <span class="footer-sep">·</span>
+      <a href="openbrowser://about" class="footer-link">About</a>
+    </footer>
+
+  </div>
+
+  <!-- Add shortcut modal -->
+  <div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true"
+         aria-labelledby="modal-title">
+      <h3 class="modal-title" id="modal-title">Add shortcut</h3>
+      <label class="modal-label" for="shortcut-name">Name</label>
+      <input type="text" class="modal-input" id="shortcut-name"
+             placeholder="e.g. GitHub" />
+      <label class="modal-label" for="shortcut-url">URL</label>
+      <input type="url" class="modal-input" id="shortcut-url"
+             placeholder="https://" />
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" id="modal-cancel">Cancel</button>
+        <button class="modal-btn modal-save" id="modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
