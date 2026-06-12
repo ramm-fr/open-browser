@@ -40,6 +40,7 @@ pkg_check_modules(GTK4 REQUIRED IMPORTED_TARGET gtk4>=4.6)
 pkg_check_modules(WEBKIT6 IMPORTED_TARGET webkitgtk-6.0>=2.40)
 if(NOT WEBKIT6_FOUND)
     pkg_check_modules(WEBKIT REQUIRED IMPORTED_TARGET webkit2gtk-4.1>=2.38)
+    add_definitions(-DUSE_WEBKIT2GTK)
 else()
     # Create an alias so src/CMakeLists.txt can use PkgConfig::WEBKIT
     add_library(PkgConfig::WEBKIT ALIAS PkgConfig::WEBKIT6)
