@@ -53,6 +53,7 @@ public:
     void open_settings();
     void open_bookmarks();
     void open_history();
+    void open_about();
 
     // Broadcast a JS message to every open tab's WebView
     void broadcast_to_all_tabs(const std::string& js);

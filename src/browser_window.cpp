@@ -450,6 +450,10 @@ void BrowserWindow::open_history() {
     new_tab("openbrowser://history");
 }
 
+void BrowserWindow::open_about() {
+    new_tab("openbrowser://about");
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // UI Construction
 // ─────────────────────────────────────────────────────────────────────────────

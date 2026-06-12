@@ -36,7 +36,14 @@ endif()
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(GTK4 REQUIRED IMPORTED_TARGET gtk4>=4.6)
-pkg_check_modules(WEBKIT REQUIRED IMPORTED_TARGET webkitgtk-6.0>=2.40)
+# Try webkitgtk-6.0 first, fall back to webkit2gtk-4.1
+pkg_check_modules(WEBKIT6 IMPORTED_TARGET webkitgtk-6.0>=2.40)
+if(NOT WEBKIT6_FOUND)
+    pkg_check_modules(WEBKIT REQUIRED IMPORTED_TARGET webkit2gtk-4.1>=2.38)
+else()
+    # Create an alias so src/CMakeLists.txt can use PkgConfig::WEBKIT
+    add_library(PkgConfig::WEBKIT ALIAS PkgConfig::WEBKIT6)
+endif()
 pkg_check_modules(LIBSOUP REQUIRED IMPORTED_TARGET libsoup-3.0)
 pkg_check_modules(GLIB REQUIRED IMPORTED_TARGET glib-2.0)
 pkg_check_modules(GIO REQUIRED IMPORTED_TARGET gio-2.0)

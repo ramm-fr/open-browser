@@ -39,7 +39,7 @@ Built on GTK4 and WebKitGTK, Open Browser combines a clean, distraction-free int
 
 - Linux (x86_64 or ARM64)
 - GTK 4.6+
-- WebKitGTK 2.38+ (webkit2gtk-4.1)
+- WebKitGTK 2.38+ (webkitgtk-6.0 or webkit2gtk-4.1)
 - CMake 3.20+
 - C++20 compiler (GCC 11+ or Clang 13+)
 - Ninja or GNU Make

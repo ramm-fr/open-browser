@@ -42,6 +42,11 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', effective);
   document.body.style.backgroundColor = effective === 'dark' ? '#000000' : '#ffffff';
   document.body.style.color = effective === 'dark' ? '#ffffff' : '#000000';
+  
+  // Send theme change message to browser window to apply to all tabs
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.browser) {
+    window.webkit.messageHandlers.browser.postMessage('theme:' + effective);
+  }
 }
 
 // ── Toast Status Notification Banner ──────────────────────────────────────
@@ -64,7 +69,18 @@ function populateForm(s) {
   if (zoomSelect) zoomSelect.value = String(s.default_zoom);
   
   const searchSelect = document.getElementById('search-engine-select');
-  if (searchSelect) searchSelect.value = s.search_engine.includes('custom') ? 'custom' : s.search_engine;
+  const customEngineInput = document.getElementById('custom-engine-input');
+  if (searchSelect) {
+    if (s.search_engine && !s.search_engine.includes('custom') && 
+        s.search_engine !== 'https://search.brave.com/search?q=' && 
+        s.search_engine !== 'https://duckduckgo.com/?q=' && 
+        s.search_engine !== 'https://www.google.com/search?q=') {
+      searchSelect.value = 'custom';
+      if (customEngineInput) customEngineInput.value = s.search_engine;
+    } else {
+      searchSelect.value = s.search_engine.includes('custom') ? 'custom' : s.search_engine;
+    }
+  }
 
   // Custom Font Range Parameters
   const fi = document.getElementById('font-size-input');
@@ -124,12 +140,19 @@ function initNav() {
   const btns     = document.querySelectorAll('.sidebar-nav-btn');
   const sections = document.querySelectorAll('.settings-section');
 
+  console.log('Found', btns.length, 'navigation buttons');
+  console.log('Found', sections.length, 'settings sections');
+
   function activate(target) {
+    console.log('Activating section:', target);
     btns.forEach(b => b.classList.toggle('is-active', b.dataset.section === target));
     sections.forEach(s => s.classList.toggle('is-active', s.id === target));
   }
 
-  btns.forEach(b => b.addEventListener('click', () => activate(b.dataset.section)));
+  btns.forEach(b => {
+    console.log('Adding click listener to button with data-section:', b.dataset.section);
+    b.addEventListener('click', () => activate(b.dataset.section));
+  });
 }
 
 // ── Form Input Change Event Wire Binding ──────────────────────────────────
@@ -179,13 +202,14 @@ function initEvents() {
 
 // ── Application Initialization Lifecycle ──────────────────────────────────
 function init() {
+  // Render Vector Icon Layer Objects first
+  if (window.lucide) { lucide.createIcons(); }
+  
   const s = loadSettings();
   applyTheme(s.theme);
   populateForm(s);
   initNav();
   initEvents();
-  // Render Vector Icon Layer Objects smoothly
-  if (window.lucide) { lucide.createIcons(); }
 }
 
 document.readyState === 'loading'
