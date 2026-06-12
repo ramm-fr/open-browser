@@ -85,7 +85,10 @@ sudo apt-get install -y \
 
 git clone https://github.com/ramm-fr/open-browser.git
 cd open-browser
-./build.sh
+cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+cmake --build build --parallel
+sudo cmake --install build
+sudo ldconfig
 ```
 
 ### Fedora 38+
@@ -100,7 +103,10 @@ sudo dnf install -y \
 
 git clone https://github.com/ramm-fr/open-browser.git
 cd open-browser
-./build.sh
+cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+cmake --build build --parallel
+sudo cmake --install build
+sudo ldconfig
 ```
 
 ### Arch Linux / Manjaro
@@ -115,7 +121,10 @@ sudo pacman -S --needed \
 
 git clone https://github.com/ramm-fr/open-browser.git
 cd open-browser
-./build.sh
+cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+cmake --build build --parallel
+sudo cmake --install build
+sudo ldconfig
 ```
 
 ### Manual Build
@@ -126,6 +135,7 @@ cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build --parallel
 sudo cmake --install build
+sudo ldconfig
 ```
 
 ---
@@ -150,9 +160,26 @@ rm -rf ~/.local/share/open-browser
 ### From Source
 
 ```bash
-sudo cmake --install build --component Uninstall
+# Remove installed files
+sudo rm -f /usr/local/bin/open-browser
+sudo rm -f /usr/local/share/applications/io.openbrowser.Browser.desktop
+sudo rm -f /usr/local/share/metainfo/io.openbrowser.Browser.metainfo.xml
+sudo rm -rf /usr/local/share/open-browser
+sudo rm -f /usr/local/share/icons/hicolor/scalable/apps/io.openbrowser.Browser.svg
+sudo rm -f /usr/local/share/icons/hicolor/256x256/apps/io.openbrowser.Browser.png
+sudo rm -f /usr/local/share/icons/hicolor/128x128/apps/io.openbrowser.Browser.png
+sudo rm -f /usr/local/share/icons/hicolor/64x64/apps/io.openbrowser.Browser.png
+sudo rm -f /usr/local/share/icons/hicolor/48x48/apps/io.openbrowser.Browser.png
+sudo rm -f /usr/local/share/icons/hicolor/32x32/apps/io.openbrowser.Browser.png
+
+# Remove user data
 rm -rf ~/.config/open-browser
 rm -rf ~/.local/share/open-browser
+rm -rf ~/.cache/open-browser
+
+# Update desktop database
+sudo update-desktop-database /usr/local/share/applications
+sudo gtk-update-icon-cache /usr/local/share/icons/hicolor 2>/dev/null || true
 ```
 
 ---
