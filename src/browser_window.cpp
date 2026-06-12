@@ -13,7 +13,6 @@
 #include <algorithm>
 #include <cstring>
 #include <filesystem>
-#include <format>
 #include <string>
 
 namespace open_browser {
@@ -335,7 +334,7 @@ void BrowserWindow::new_tab(const std::string& url) {
 
     setup_webview_for_tab(tab);
 
-    const std::string page_name = std::format("tab-{}", tab.id);
+    const std::string page_name = "tab-" + std::to_string(tab.id);
     gtk_stack_add_named(GTK_STACK(webview_stack_),
                         tab.page_widget,
                         page_name.c_str());
@@ -361,7 +360,7 @@ void BrowserWindow::close_tab(int tab_id) {
         [tab_id](const Tab& t) { return t.id == tab_id; });
     if (it == tabs_.end()) return;
 
-    const std::string page_name = std::format("tab-{}", tab_id);
+    const std::string page_name = "tab-" + std::to_string(tab_id);
     GtkWidget* page = gtk_stack_get_child_by_name(GTK_STACK(webview_stack_),
                                                    page_name.c_str());
     if (page) {
@@ -387,7 +386,7 @@ void BrowserWindow::switch_tab(int tab_id) {
 
     active_tab_id_ = tab_id;
 
-    const std::string page_name = std::format("tab-{}", tab_id);
+    const std::string page_name = "tab-" + std::to_string(tab_id);
     gtk_stack_set_visible_child_name(GTK_STACK(webview_stack_), page_name.c_str());
 
     update_address_bar(tab->url);

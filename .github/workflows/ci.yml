@@ -34,6 +34,7 @@ jobs:
             libsecret-1-dev \
             nlohmann-json3-dev \
             libgtest-dev \
+            libgail-3-dev \
             g++
 
       - name: Configure
@@ -92,7 +93,8 @@ jobs:
             cmake ninja-build pkg-config \
             libgtk-4-dev libwebkit2gtk-4.1-dev \
             libsoup-3.0-dev libglib2.0-dev \
-            libsecret-1-dev nlohmann-json3-dev g++
+            libsecret-1-dev nlohmann-json3-dev \
+            libgail-3-dev g++
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
