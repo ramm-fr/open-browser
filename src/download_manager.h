@@ -5,7 +5,11 @@
 #include <string>
 #include <vector>
 
+#ifdef USE_WEBKIT2GTK
+#include <webkit2/webkit2.h>
+#else
 #include <webkit/webkit.h>
+#endif
 
 namespace open_browser {
 
