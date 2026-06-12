@@ -91,8 +91,13 @@ add_subdirectory(src)
 # Tests
 option(BUILD_TESTS "Build unit tests" ON)
 if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
+    find_package(GTest QUIET)
+    if(GTest_FOUND)
+        enable_testing()
+        add_subdirectory(tests)
+    else()
+        message(STATUS "GTest not found, skipping tests")
+    endif()
 endif()
 
 # Install desktop entry
