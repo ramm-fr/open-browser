@@ -898,7 +898,7 @@ void BrowserWindow::rebuild_tab_bar_buttons() {
                 }),
                 d,
                 [](gpointer p, GClosure*) { delete static_cast<D*>(p); },
-                G_CONNECT_DEFAULT);
+                static_cast<GConnectFlags>(0));
         }
 
         // ── Close button — separate widget, NOT inside tab_btn ───────────
@@ -917,7 +917,7 @@ void BrowserWindow::rebuild_tab_bar_buttons() {
                 }),
                 d,
                 [](gpointer p, GClosure*) { delete static_cast<D*>(p); },
-                G_CONNECT_DEFAULT);
+                static_cast<GConnectFlags>(0));
         }
 
         gtk_box_append(GTK_BOX(outer), tab_btn);

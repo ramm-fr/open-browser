@@ -28,7 +28,7 @@ jobs:
             ninja-build \
             pkg-config \
             libgtk-4-dev \
-            libwebkit2gtk-4.1-dev \
+            libwebkitgtk-6.0-dev \
             libsoup-3.0-dev \
             libglib2.0-dev \
             libsecret-1-dev \
@@ -91,7 +91,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             cmake ninja-build pkg-config \
-            libgtk-4-dev libwebkit2gtk-4.1-dev \
+            libgtk-4-dev libwebkitgtk-6.0-dev \
             libsoup-3.0-dev libglib2.0-dev \
             libsecret-1-dev nlohmann-json3-dev \
             libgail-3-dev g++
