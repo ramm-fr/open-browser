@@ -11,7 +11,7 @@ using open_browser::BookmarkManager;
 struct BookmarkManagerTest : ::testing::Test {
   void SetUp() override {
     // Clear by removing all entries through the public API
-    auto& mgr = BookmarkManager::instance();
+    auto &mgr = BookmarkManager::instance();
     for (const auto& bm : mgr.get_all()) mgr.remove(bm.id);
     for (const auto& f : mgr.get_folders()) mgr.remove_folder(f.id);
   }
@@ -20,7 +20,7 @@ struct BookmarkManagerTest : ::testing::Test {
 // ────────────────────────────────────────────────────────────────────
 
 TEST_F(BookmarkManagerTest, AddAndRetrieve) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   Bookmark bm = mgr.add("https://example.com", "Example");
 
   EXPECT_GT(bm.id, 0);
@@ -33,19 +33,19 @@ TEST_F(BookmarkManagerTest, AddAndRetrieve) {
 }
 
 TEST_F(BookmarkManagerTest, Remove) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   Bookmark bm = mgr.add("https://example.com", "Example");
   EXPECT_TRUE(mgr.remove(bm.id));
   EXPECT_TRUE(mgr.get_all().empty());
 }
 
 TEST_F(BookmarkManagerTest, RemoveNonexistent) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   EXPECT_FALSE(mgr.remove(999));
 }
 
 TEST_F(BookmarkManagerTest, Update) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   Bookmark bm = mgr.add("https://example.com", "Old title");
   EXPECT_TRUE(mgr.update(bm.id, "New title", "work"));
 
@@ -56,14 +56,14 @@ TEST_F(BookmarkManagerTest, Update) {
 }
 
 TEST_F(BookmarkManagerTest, IsBookmarked) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   EXPECT_FALSE(mgr.is_bookmarked("https://example.com"));
   mgr.add("https://example.com", "Test");
   EXPECT_TRUE(mgr.is_bookmarked("https://example.com"));
 }
 
 TEST_F(BookmarkManagerTest, SearchByTitle) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   mgr.add("https://github.com", "GitHub");
   mgr.add("https://gitlab.com", "GitLab");
   mgr.add("https://wikipedia.org", "Wikipedia");
@@ -73,7 +73,7 @@ TEST_F(BookmarkManagerTest, SearchByTitle) {
 }
 
 TEST_F(BookmarkManagerTest, SearchByUrl) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   mgr.add("https://news.ycombinator.com", "Hacker News");
   mgr.add("https://reddit.com", "Reddit");
 
@@ -83,7 +83,7 @@ TEST_F(BookmarkManagerTest, SearchByUrl) {
 }
 
 TEST_F(BookmarkManagerTest, GetByFolder) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   mgr.add("https://example.com", "Work site", "work");
   mgr.add("https://youtube.com", "YouTube", "personal");
   mgr.add("https://github.com", "GitHub", "work");
@@ -96,13 +96,13 @@ TEST_F(BookmarkManagerTest, GetByFolder) {
 }
 
 TEST_F(BookmarkManagerTest, FindByUrlNone) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   auto result = mgr.find_by_url("https://nonexistent.example");
   EXPECT_FALSE(result.has_value());
 }
 
 TEST_F(BookmarkManagerTest, AddAndRemoveFolder) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   BookmarkFolder f = mgr.add_folder("Work", 0);
   EXPECT_GT(f.id, 0);
   EXPECT_EQ(f.name, "Work");
@@ -115,7 +115,7 @@ TEST_F(BookmarkManagerTest, AddAndRemoveFolder) {
 }
 
 TEST_F(BookmarkManagerTest, TitleFallsBackToUrl) {
-  auto& mgr = BookmarkManager::instance();
+  auto &mgr = BookmarkManager::instance();
   Bookmark bm = mgr.add("https://example.com", "");
   EXPECT_EQ(bm.title, "https://example.com");
 }
