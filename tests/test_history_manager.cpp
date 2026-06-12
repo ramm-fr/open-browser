@@ -71,8 +71,8 @@ TEST_F(HistoryManagerTest, ClearAll) {
 }
 
 TEST_F(HistoryManagerTest, SearchByTitle) {
-    HistoryManager::instance().add_visit("https://github.com",    "GitHub");
-    HistoryManager::instance().add_visit("https://gitlab.com",    "GitLab");
+    HistoryManager::instance().add_visit("https://github.com", "GitHub");
+    HistoryManager::instance().add_visit("https://gitlab.com", "GitLab");
     HistoryManager::instance().add_visit("https://wikipedia.org", "Wikipedia");
 
     auto results = HistoryManager::instance().search("git");
@@ -81,7 +81,7 @@ TEST_F(HistoryManagerTest, SearchByTitle) {
 
 TEST_F(HistoryManagerTest, SearchByUrl) {
     HistoryManager::instance().add_visit("https://news.ycombinator.com", "HN");
-    HistoryManager::instance().add_visit("https://reddit.com",           "Reddit");
+    HistoryManager::instance().add_visit("https://reddit.com", "Reddit");
 
     auto results = HistoryManager::instance().search("ycombinator");
     ASSERT_EQ(results.size(), 1u);

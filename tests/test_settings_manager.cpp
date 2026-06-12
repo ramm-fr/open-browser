@@ -70,8 +70,7 @@ TEST_F(SettingsManagerTest, SetAndGetString) {
 TEST_F(SettingsManagerTest, ChangeCallback) {
   bool called = false;
   SettingsManager::instance().on_change(
-      "font_size",
-      [&](const open_browser::SettingValue &) { called = true; });
+      "font_size", [&](const open_browser::SettingValue &) { called = true; });
   SettingsManager::instance().set<int>("font_size", 20);
   EXPECT_TRUE(called);
   // Restore
