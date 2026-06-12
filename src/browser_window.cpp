@@ -741,7 +741,7 @@ void BrowserWindow::setup_webview_for_tab(Tab& tab) {
 
 void BrowserWindow::apply_css() {
     css_provider_ = gtk_css_provider_new();
-    gtk_css_provider_load_from_string(css_provider_, kBrowserCSS);
+    gtk_css_provider_load_from_data(css_provider_, kBrowserCSS, -1);
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
         GTK_STYLE_PROVIDER(css_provider_),
@@ -1242,7 +1242,7 @@ button.tab-button.active-tab { color: #fafafa; }
     }
 
     if (theme == "dark") {
-        gtk_css_provider_load_from_string(dark_css_provider_, kDarkCSS);
+        gtk_css_provider_load_from_data(dark_css_provider_, kDarkCSS, -1);
         if (!dark_css_applied_) {
             gtk_style_context_add_provider_for_display(
                 gdk_display_get_default(),
@@ -1252,7 +1252,7 @@ button.tab-button.active-tab { color: #fafafa; }
         }
         gtk_widget_add_css_class(window_, "dark-mode");
     } else {
-        gtk_css_provider_load_from_string(dark_css_provider_, kLightCSS);
+        gtk_css_provider_load_from_data(dark_css_provider_, kLightCSS, -1);
         gtk_widget_remove_css_class(window_, "dark-mode");
     }
 
