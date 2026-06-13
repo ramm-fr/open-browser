@@ -1,7 +1,7 @@
 // Open Browser — test_bookmark_manager.cpp
 
-#include <gtest/gtest.h>
 #include "bookmark_manager.h"
+#include <gtest/gtest.h>
 
 using open_browser::Bookmark;
 using open_browser::BookmarkFolder;
@@ -12,8 +12,10 @@ struct BookmarkManagerTest : ::testing::Test {
   void SetUp() override {
     // Clear by removing all entries through the public API
     auto &mgr = BookmarkManager::instance();
-    for (const auto &bm : mgr.get_all()) mgr.remove(bm.id);
-    for (const auto &f : mgr.get_folders()) mgr.remove_folder(f.id);
+    for (const auto &bm : mgr.get_all())
+      mgr.remove(bm.id);
+    for (const auto &f : mgr.get_folders())
+      mgr.remove_folder(f.id);
   }
 };
 
