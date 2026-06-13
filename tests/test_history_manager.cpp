@@ -91,16 +91,20 @@ TEST_F(HistoryManagerTest, SearchByUrl) {
 TEST_F(HistoryManagerTest, ClearRange) {
     // Add entries with the current timestamp
     const std::time_t now = std::time(nullptr);
-    HistoryManager::instance().add_visit("https://a.com", "A");
-    HistoryManager::instance().add_visit("https://b.com", "B");
+    HistoryManager::instance().add_visit(
+        "https://a.com", "A");
+    HistoryManager::instance().add_visit(
+        "https://b.com", "B");
 
     // Clear everything in the last minute
-    HistoryManager::instance().clear_range(now - 60, now + 60);
+    HistoryManager::instance().clear_range(
+        now - 60, now + 60);
 
     EXPECT_TRUE(HistoryManager::instance().get_recent(10).empty());
 }
 
 TEST_F(HistoryManagerTest, EmptyUrlIgnored) {
-    HistoryManager::instance().add_visit("", "No URL");
+    HistoryManager::instance().add_visit(
+        "", "No URL");
     EXPECT_TRUE(HistoryManager::instance().get_recent(10).empty());
 }
