@@ -20,7 +20,7 @@ TEST_F(HistoryManagerTest, AddVisit) {
     HistoryManager::instance().add_visit("https://example.com", "Example");
     auto recent = HistoryManager::instance().get_recent(10);
     ASSERT_EQ(recent.size(), 1u);
-    EXPECT_EQ(recent[0].url,   "https://example.com");
+    EXPECT_EQ(recent[0].url, "https://example.com");
     EXPECT_EQ(recent[0].title, "Example");
     EXPECT_EQ(recent[0].visit_count, 1);
 }
