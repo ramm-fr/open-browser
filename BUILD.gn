@@ -59,6 +59,16 @@ source_set("open_browser_ui") {
   sources = [
     "src/browser_window.cpp",
     "src/browser_window.h",
+    "src/ui/address_bar.cpp",
+    "src/ui/address_bar.h",
+    "src/ui/browser_shell.cpp",
+    "src/ui/browser_shell.h",
+    "src/ui/navigation_bar.cpp",
+    "src/ui/navigation_bar.h",
+    "src/ui/tab_strip.cpp",
+    "src/ui/tab_strip.h",
+    "src/ui/window_controls.cpp",
+    "src/ui/window_controls.h",
   ]
   deps = [ ":open_browser_core" ]
   configs += [

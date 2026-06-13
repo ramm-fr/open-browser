@@ -3,13 +3,14 @@
 
 #include "settings_manager.h"
 
+#include <glib.h>
+
+#include <nlohmann/json.hpp>
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-
-#include <glib.h>
-#include <nlohmann/json.hpp>
 
 namespace open_browser {
 
@@ -127,7 +128,8 @@ void SettingsManager::save() const {
 // Generic get / set
 // ─────────────────────────────────────────────────────────────────────────────
 
-template <typename T> T SettingsManager::get(const std::string &key) const {
+template <typename T>
+T SettingsManager::get(const std::string &key) const {
   auto it = settings_.find(key);
   if (it == settings_.end())
     return T{};
@@ -184,8 +186,12 @@ std::string SettingsManager::search_engine() const {
 bool SettingsManager::hardware_acceleration() const {
   return get<bool>("hardware_acceleration");
 }
-bool SettingsManager::dark_mode() const { return get<bool>("dark_mode"); }
-bool SettingsManager::block_ads() const { return get<bool>("block_ads"); }
+bool SettingsManager::dark_mode() const {
+  return get<bool>("dark_mode");
+}
+bool SettingsManager::block_ads() const {
+  return get<bool>("block_ads");
+}
 bool SettingsManager::block_trackers() const {
   return get<bool>("block_trackers");
 }
@@ -201,7 +207,9 @@ std::string SettingsManager::download_path() const {
 std::string SettingsManager::homepage() const {
   return get<std::string>("homepage");
 }
-int SettingsManager::font_size() const { return get<int>("font_size"); }
+int SettingsManager::font_size() const {
+  return get<int>("font_size");
+}
 bool SettingsManager::show_bookmarks_bar() const {
   return get<bool>("show_bookmarks_bar");
 }
@@ -211,8 +219,12 @@ bool SettingsManager::smooth_scrolling() const {
 bool SettingsManager::reduce_motion() const {
   return get<bool>("reduce_motion");
 }
-int SettingsManager::default_zoom() const { return get<int>("default_zoom"); }
-std::string SettingsManager::theme() const { return get<std::string>("theme"); }
+int SettingsManager::default_zoom() const {
+  return get<int>("default_zoom");
+}
+std::string SettingsManager::theme() const {
+  return get<std::string>("theme");
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Path helper

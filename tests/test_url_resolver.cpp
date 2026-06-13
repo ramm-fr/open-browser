@@ -1,6 +1,7 @@
 // Open Browser — test_url_resolver.cpp
 
 #include "url_resolver.h"
+
 #include <gtest/gtest.h>
 
 using open_browser::UrlResolver;

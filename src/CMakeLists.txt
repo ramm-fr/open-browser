@@ -10,10 +10,20 @@ set(BROWSER_SOURCES
     ad_blocker.cpp
 )
 
-add_executable(open-browser ${BROWSER_SOURCES})
+# Production-ready modular UI components
+set(UI_SOURCES
+    ui/tab_strip.cpp
+    ui/window_controls.cpp
+    ui/address_bar.cpp
+    ui/navigation_bar.cpp
+    ui/browser_shell.cpp
+)
+
+add_executable(open-browser ${BROWSER_SOURCES} ${UI_SOURCES})
 
 target_include_directories(open-browser PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/ui"
     "${CMAKE_CURRENT_BINARY_DIR}/.."
 )
 
@@ -41,6 +51,14 @@ add_custom_command(TARGET open-browser POST_BUILD
         "${CMAKE_SOURCE_DIR}/resources/icons"
         "${CMAKE_CURRENT_BINARY_DIR}/../resources/icons"
     COMMENT "Copying Lucide icons to build directory"
+)
+
+# Copy theme CSS to build dir for development convenience
+add_custom_command(TARGET open-browser POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/themes"
+        "${CMAKE_CURRENT_BINARY_DIR}/../src/themes"
+    COMMENT "Copying theme CSS to build directory"
 )
 
 # Install the binary

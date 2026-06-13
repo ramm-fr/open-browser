@@ -1,8 +1,8 @@
 // Open Browser — test_settings_manager.cpp
 
-#include <gtest/gtest.h>
-
 #include "settings_manager.h"
+
+#include <gtest/gtest.h>
 
 using open_browser::SettingsManager;
 

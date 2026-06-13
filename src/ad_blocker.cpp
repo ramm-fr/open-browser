@@ -3,14 +3,14 @@
 
 #include "ad_blocker.h"
 
+#include <glib.h>
+
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string_view>
-
-#include <glib.h>
 
 namespace open_browser {
 

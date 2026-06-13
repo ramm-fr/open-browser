@@ -1,6 +1,7 @@
 // Open Browser — test_bookmark_manager.cpp
 
 #include "bookmark_manager.h"
+
 #include <gtest/gtest.h>
 
 using open_browser::Bookmark;

@@ -3,15 +3,16 @@
 
 #include "password_manager.h"
 
+#include <glib.h>
+
+#include <nlohmann/json.hpp>
+
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <stdexcept>
-
-#include <glib.h>
 #include <libsecret/secret.h>
-#include <nlohmann/json.hpp>
+#include <stdexcept>
 
 namespace open_browser {
 
@@ -193,7 +194,9 @@ PasswordManager::get_for_origin(const std::string &origin) const {
   return result;
 }
 
-std::vector<PasswordEntry> PasswordManager::get_all() const { return entries_; }
+std::vector<PasswordEntry> PasswordManager::get_all() const {
+  return entries_;
+}
 
 bool PasswordManager::remove(int64_t id) {
   auto it = std::find_if(entries_.begin(), entries_.end(),

@@ -2,15 +2,16 @@
 
 #include "bookmark_manager.h"
 
+#include <glib.h>
+
+#include <nlohmann/json.hpp>
+
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-
-#include <glib.h>
-#include <nlohmann/json.hpp>
 
 namespace open_browser {
 
@@ -140,7 +141,9 @@ bool BookmarkManager::update(int64_t id, const std::string &title,
 // Queries
 // ─────────────────────────────────────────────────────────────────────────────
 
-std::vector<Bookmark> BookmarkManager::get_all() const { return bookmarks_; }
+std::vector<Bookmark> BookmarkManager::get_all() const {
+  return bookmarks_;
+}
 
 std::vector<Bookmark>
 BookmarkManager::get_by_folder(const std::string &folder) const {

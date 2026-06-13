@@ -1,0 +1,31 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+IndentWidth: 2
+ColumnLimit: 80
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: Yes
+BinPackParameters: true
+BinPackArguments: true
+PointerAlignment: Right
+SpaceAfterCStyleCast: false
+SpacesInParentheses: false
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"'
+    Priority: 1
+  - Regex: '^<gtk/'
+    Priority: 2
+  - Regex: '^<webkit'
+    Priority: 2
+  - Regex: '^<glib'
+    Priority: 2
+  - Regex: '^<nlohmann/'
+    Priority: 3
+  - Regex: '^<'
+    Priority: 4
+SortIncludes: CaseInsensitive
+---

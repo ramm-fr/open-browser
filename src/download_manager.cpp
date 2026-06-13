@@ -1,6 +1,7 @@
 // Open Browser — download_manager.cpp
 
 #include "download_manager.h"
+
 #include "settings_manager.h"
 
 #include <algorithm>
@@ -120,7 +121,9 @@ void DownloadManager::clear_completed() {
 // Queries
 // ─────────────────────────────────────────────────────────────────────────────
 
-std::vector<Download> DownloadManager::get_all() const { return downloads_; }
+std::vector<Download> DownloadManager::get_all() const {
+  return downloads_;
+}
 
 std::vector<Download> DownloadManager::get_active() const {
   std::vector<Download> result;

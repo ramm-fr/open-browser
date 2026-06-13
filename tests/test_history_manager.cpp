@@ -1,6 +1,7 @@
 // Open Browser — test_history_manager.cpp
 
 #include "history_manager.h"
+
 #include <chrono>
 #include <gtest/gtest.h>
 #include <thread>

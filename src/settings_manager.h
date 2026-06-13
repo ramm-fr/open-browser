@@ -24,10 +24,12 @@ public:
 
   // Generic typed getter. Returns default-constructed T if key is missing
   // or the stored type doesn't match.
-  template <typename T> T get(const std::string &key) const;
+  template <typename T>
+  T get(const std::string &key) const;
 
   // Generic typed setter. Fires registered callbacks after setting.
-  template <typename T> void set(const std::string &key, const T &value);
+  template <typename T>
+  void set(const std::string &key, const T &value);
 
   // Register a callback that fires when the given key changes.
   void on_change(const std::string &key,

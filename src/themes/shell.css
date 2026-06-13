@@ -1,0 +1,455 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   Open Browser — Shell Theme (Light)
+   Version 2.0 — Polished
+   Font: Inter (fallback: system-ui)
+   Accent: #2563eb
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+
+window.open-browser-window {
+    background: #ffffff;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #18181b;
+}
+
+/* ── Row 1: Title bar ────────────────────────────────────────────────────── */
+
+headerbar#shell-titlebar {
+    background: #f7f7f8;
+    border-bottom: 1px solid #efefef;
+    box-shadow: none;
+    padding: 0 12px;
+    min-height: 38px;
+}
+
+headerbar#shell-titlebar button {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    min-width: 0;
+    min-height: 0;
+    padding: 5px;
+    color: #71717a;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+headerbar#shell-titlebar button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #27272a;
+}
+
+headerbar#shell-titlebar button:active {
+    background: rgba(0, 0, 0, 0.09);
+    color: #18181b;
+}
+
+/* ── Window controls ─────────────────────────────────────────────────────── */
+
+button.wctl-btn {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    min-width: 18px;
+    min-height: 18px;
+    margin: 0 1px;
+    color: #71717a;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+button.wctl-btn:hover {
+    background: #ebebee;
+    color: #27272a;
+}
+
+button.wctl-close:hover {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+button.wctl-max:hover {
+    background: #22c55e;
+    color: #ffffff;
+}
+
+button.wctl-min:hover {
+    background: #eab308;
+    color: #ffffff;
+}
+
+/* ── Row 2: Tab bar ──────────────────────────────────────────────────────── */
+
+box#tab-bar-outer {
+    background: #f7f7f8;
+    padding: 6px 14px 0 14px;
+    min-height: 40px;
+    border-bottom: 1px solid #efefef;
+}
+
+box#tab-bar {
+    background: transparent;
+    min-height: 36px;
+}
+
+box.tab-outer {
+    background: transparent;
+    border-radius: 10px 10px 0 0;
+    margin-right: 2px;
+    padding: 0;
+    transition: background 150ms ease;
+}
+
+box.tab-outer:hover {
+    background: rgba(0, 0, 0, 0.025);
+}
+
+box.tab-outer.active-tab-outer {
+    background: #ffffff;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.03),
+                0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+box.tab-outer.active-tab-outer:hover {
+    background: #ffffff;
+}
+
+button.tab-button {
+    background: transparent;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    padding: 8px 14px;
+    font-size: 12.5px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.1px;
+    color: #71717a;
+    min-width: 48px;
+    transition: color 150ms ease;
+}
+
+button.tab-button:hover {
+    background: transparent;
+    color: #3f3f46;
+}
+
+button.tab-button.active-tab {
+    background: transparent;
+    color: #18181b;
+    font-weight: 500;
+}
+
+button.tab-close {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 3px;
+    margin: 6px 6px 0 0;
+    min-width: 18px;
+    min-height: 18px;
+    opacity: 0;
+    color: #a1a1aa;
+    transition: opacity 120ms ease, background 150ms ease, color 150ms ease;
+}
+
+box.tab-outer:hover button.tab-close,
+box.tab-outer.active-tab-outer button.tab-close {
+    opacity: 1;
+}
+
+button.tab-close:hover {
+    background: rgba(0, 0, 0, 0.07);
+    color: #3f3f46;
+}
+
+button.tab-close:active {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+/* New tab button */
+button#new-tab-button,
+button[name="tab-add-button"] {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0;
+    color: #71717a;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+button#new-tab-button:hover,
+button[name="tab-add-button"]:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #27272a;
+}
+
+button#new-tab-button:active,
+button[name="tab-add-button"]:active {
+    background: rgba(0, 0, 0, 0.09);
+}
+
+/* ── Row 3: Toolbar ──────────────────────────────────────────────────────── */
+
+box#shell-toolbar {
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f2;
+}
+
+/* Navigation buttons */
+box#shell-toolbar button {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #3f3f46;
+    min-width: 0;
+    min-height: 0;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+box#shell-toolbar button:hover {
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+box#shell-toolbar button:active {
+    background: #e4e4e7;
+}
+
+box#shell-toolbar button:disabled {
+    color: #d4d4d8;
+    opacity: 0.65;
+}
+
+/* ── Address bar ─────────────────────────────────────────────────────────── */
+
+entry#address-bar {
+    background: #f4f4f5;
+    border: 1.5px solid transparent;
+    border-radius: 12px;
+    padding: 9px 18px;
+    font-size: 13.5px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #18181b;
+    caret-color: #2563eb;
+    min-height: 20px;
+    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+entry#address-bar:hover:not(:focus) {
+    background: #ededf0;
+    border-color: transparent;
+}
+
+entry#address-bar:focus {
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08),
+                0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+entry#address-bar text {
+    color: #18181b;
+}
+
+entry#address-bar placeholder {
+    color: #a1a1aa;
+}
+
+/* ── Menu button ─────────────────────────────────────────────────────────── */
+
+menubutton#shell-menu-button > button {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #3f3f46;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+menubutton#shell-menu-button > button:hover {
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+menubutton#shell-menu-button > button:active {
+    background: #e4e4e7;
+}
+
+/* ── Menu popover ────────────────────────────────────────────────────────── */
+
+popover.menu {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08),
+                0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 6px;
+}
+
+popover.menu modelbutton {
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #27272a;
+    transition: background 120ms ease, color 120ms ease;
+}
+
+popover.menu modelbutton:hover {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+
+spinner {
+    color: #2563eb;
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────────────────── */
+
+scrollbar {
+    background: transparent;
+}
+
+scrollbar slider {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 100px;
+    min-width: 7px;
+    min-height: 7px;
+    margin: 3px;
+    transition: background 150ms ease;
+}
+
+scrollbar slider:hover {
+    background: rgba(0, 0, 0, 0.24);
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────────────────── */
+
+tooltip {
+    background: #27272a;
+    color: #fafafa;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Private mode ────────────────────────────────────────────────────────── */
+
+window.open-browser-window.private-mode {
+    background: #18181b;
+}
+
+window.private-mode headerbar#shell-titlebar {
+    background: #1f1f23;
+    border-bottom-color: #2e2e33;
+}
+
+window.private-mode box#tab-bar-outer {
+    background: #1f1f23;
+    border-bottom-color: #2e2e33;
+}
+
+window.private-mode box.tab-outer:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+window.private-mode box.tab-outer.active-tab-outer {
+    background: #27272a;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+window.private-mode button.tab-button {
+    color: #a1a1aa;
+}
+
+window.private-mode button.tab-button:hover {
+    color: #d4d4d8;
+}
+
+window.private-mode button.tab-button.active-tab {
+    color: #fafafa;
+}
+
+window.private-mode button.tab-close {
+    color: #71717a;
+}
+
+window.private-mode button.tab-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e4e4e7;
+}
+
+window.private-mode box#shell-toolbar {
+    background: #18181b;
+    border-bottom-color: #2e2e33;
+}
+
+window.private-mode box#shell-toolbar button {
+    color: #e4e4e7;
+}
+
+window.private-mode box#shell-toolbar button:hover {
+    background: #27272a;
+    color: #fafafa;
+}
+
+window.private-mode box#shell-toolbar button:disabled {
+    color: #52525b;
+}
+
+window.private-mode entry#address-bar {
+    background: #27272a;
+    border-color: transparent;
+    color: #fafafa;
+}
+
+window.private-mode entry#address-bar:hover:not(:focus) {
+    background: #2e2e33;
+}
+
+window.private-mode entry#address-bar:focus {
+    background: #18181b;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12),
+                0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+window.private-mode entry#address-bar text {
+    color: #fafafa;
+}
+
+window.private-mode menubutton#shell-menu-button > button {
+    color: #e4e4e7;
+}
+
+window.private-mode menubutton#shell-menu-button > button:hover {
+    background: #27272a;
+}
+
+window.private-mode button.wctl-btn {
+    color: #a1a1aa;
+}
+
+window.private-mode button.wctl-btn:hover {
+    color: #e4e4e7;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+window.private-mode button#new-tab-button,
+window.private-mode button[name="tab-add-button"] {
+    color: #a1a1aa;
+}
+
+window.private-mode button#new-tab-button:hover,
+window.private-mode button[name="tab-add-button"]:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e4e4e7;
+}

@@ -1,6 +1,7 @@
 // Open Browser — test_ad_blocker.cpp
 
 #include "ad_blocker.h"
+
 #include <gtest/gtest.h>
 
 using open_browser::AdBlocker;

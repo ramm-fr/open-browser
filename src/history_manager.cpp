@@ -2,14 +2,15 @@
 
 #include "history_manager.h"
 
+#include <glib.h>
+
+#include <nlohmann/json.hpp>
+
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-
-#include <glib.h>
-#include <nlohmann/json.hpp>
 
 namespace open_browser {
 

@@ -2,16 +2,15 @@
 // Complete GTK4 + WebKitGTK4 browser window implementation.
 
 #include "browser_window.h"
+
 #include "ad_blocker.h"
 #include "history_manager.h"
 #include "settings_manager.h"
 #include "url_resolver.h"
 
 #include <glib.h>
-#include <glib/gstdio.h>
 
 #include <algorithm>
-#include <cstring>
 #include <filesystem>
 #include <string>
 
@@ -79,191 +78,31 @@ std::string internal_to_file_uri(const std::string &url) {
   return "data:text/html,<html><body><h1>Page not found</h1></body></html>";
 }
 
-// Inline GTK4 CSS theme for the browser chrome.
-constexpr const char *kBrowserCSS = R"CSS(
-/* ── Open Browser Chrome Theme - Minimal Black/White ────────────────────────────── */
+// Path to the shell CSS theme file (looked up at runtime).
+std::string find_theme_file(const std::string &filename) {
+  const std::filesystem::path exe_dir =
+      std::filesystem::canonical("/proc/self/exe").parent_path();
 
-window.open-browser-window {
-    background: #000000;
-}
+  // Development: next to the binary or in the source tree
+  for (const auto &candidate : {
+           exe_dir / ".." / "src" / "themes" / filename,
+           exe_dir / "themes" / filename,
+       }) {
+    if (std::filesystem::exists(candidate))
+      return std::filesystem::canonical(candidate).string();
+  }
 
-headerbar {
-    background: #000000;
-    border-bottom: 1px solid #1a1a1a;
-    padding: 0;
-    min-height: 40px;
+  // Installed location
+  const char *data_dirs =
+      g_get_system_data_dirs() ? g_get_system_data_dirs()[0] : nullptr;
+  if (data_dirs) {
+    std::filesystem::path installed =
+        std::filesystem::path(data_dirs) / "open-browser" / "themes" / filename;
+    if (std::filesystem::exists(installed))
+      return installed.string();
+  }
+  return "";
 }
-
-headerbar button {
-    border-radius: 4px;
-    border: 1px solid #1a1a1a;
-    background: #000000;
-    padding: 8px;
-    color: #ffffff;
-    transition: all 120ms ease;
-}
-
-headerbar button:hover {
-    background: #1a1a1a;
-    border-color: #ffffff;
-}
-
-headerbar button:active {
-    background: #ffffff;
-    color: #000000;
-}
-
-headerbar button:disabled {
-    color: #333333;
-    background: #000000;
-}
-
-/* Address bar */
-entry#address-bar {
-    border-radius: 0;
-    border: 1px solid #1a1a1a;
-    background: #0a0a0a;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    min-width: 300px;
-    transition: all 140ms ease;
-    color: #ffffff;
-}
-
-entry#address-bar:focus {
-    border-color: #ffffff;
-    background: #000000;
-}
-
-/* Tab bar */
-box#tab-bar {
-    background: #000000;
-    border-bottom: 1px solid #1a1a1a;
-    padding: 0;
-    min-height: 32px;
-}
-
-/* Outer wrapper per tab: [switch-btn][close-btn] */
-box.tab-outer {
-    border-radius: 0;
-    margin-right: 0;
-    background: #000000;
-    transition: all 120ms ease;
-    border: 1px solid transparent;
-}
-
-box.tab-outer.active-tab-outer {
-    background: #0a0a0a;
-    border-bottom: 2px solid #ffffff;
-}
-
-button.tab-button {
-    border-radius: 0;
-    border: none;
-    background: transparent;
-    padding: 6px 12px;
-    font-size: 12px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #666666;
-    min-width: 80px;
-    transition: all 120ms ease;
-}
-
-button.tab-button:hover {
-    background: #0a0a0a;
-    color: #ffffff;
-}
-
-button.tab-button.active-tab {
-    background: transparent;
-    color: #ffffff;
-    font-weight: 500;
-}
-
-button.tab-close {
-    border-radius: 2px;
-    border: none;
-    background: transparent;
-    padding: 2px 4px;
-    margin: 4px 2px 0 0;
-    opacity: 0;
-    transition: all 120ms ease;
-    min-width: 16px;
-    min-height: 16px;
-    color: #666666;
-}
-
-box.tab-outer:hover button.tab-close,
-box.tab-outer.active-tab-outer button.tab-close {
-    opacity: 1;
-}
-
-button.tab-close:hover {
-    background: #ffffff;
-    color: #000000;
-}
-
-button#new-tab-button {
-    border-radius: 2px;
-    min-width: 24px;
-    min-height: 24px;
-    padding: 0;
-    font-size: 14px;
-    margin-left: 8px;
-    background: #000000;
-    border: 1px solid #1a1a1a;
-    color: #ffffff;
-}
-
-button#new-tab-button:hover {
-    background: #ffffff;
-    color: #000000;
-}
-
-/* Window control buttons */
-button.wctl-btn {
-    border-radius: 2px;
-    border: 1px solid #1a1a1a;
-    padding: 4px;
-    min-width: 24px;
-    min-height: 24px;
-    background: #000000;
-    opacity: 1;
-    transition: all 120ms ease;
-    color: #ffffff;
-}
-button.wctl-btn:hover {
-    background: #ffffff;
-    color: #000000;
-}
-button.wctl-close:hover { background: #ffffff; color: #000000; }
-button.wctl-min:hover   { background: #ffffff; color: #000000; }
-button.wctl-max:hover   { background: #ffffff; color: #000000; }
-
-/* Ensure window controls are on the right side */
-headerbar > box:last-child {
-    margin-left: auto;
-}
-
-/* Private mode indicator */
-window.private-mode headerbar {
-    background: #000000;
-    color: #ffffff;
-}
-window.private-mode entry#address-bar {
-    background: #0a0a0a;
-    border-color: #1a1a1a;
-    color: #ffffff;
-}
-window.private-mode button.tab-button.active-tab {
-    background: #0a0a0a;
-    color: #ffffff;
-}
-window.private-mode box#tab-bar {
-    background: #000000;
-}
-)CSS";
 
 } // anonymous namespace
 
@@ -300,7 +139,9 @@ BrowserWindow::~BrowserWindow() {
 // Public API
 // ─────────────────────────────────────────────────────────────────────────────
 
-void BrowserWindow::show() { gtk_window_present(GTK_WINDOW(window_)); }
+void BrowserWindow::show() {
+  gtk_window_present(GTK_WINDOW(window_));
+}
 
 void BrowserWindow::navigate(const std::string &url) {
   Tab *tab = active_tab();
@@ -426,8 +267,7 @@ void BrowserWindow::stop() {
 }
 
 void BrowserWindow::focus_address_bar() {
-  gtk_widget_grab_focus(address_bar_);
-  gtk_editable_select_region(GTK_EDITABLE(address_bar_), 0, -1);
+  shell_->focus_address_bar();
 }
 
 void BrowserWindow::toggle_private_mode() {
@@ -439,15 +279,25 @@ void BrowserWindow::toggle_private_mode() {
   }
 }
 
-void BrowserWindow::open_downloads() { new_tab("openbrowser://downloads"); }
+void BrowserWindow::open_downloads() {
+  new_tab("openbrowser://downloads");
+}
 
-void BrowserWindow::open_settings() { new_tab("openbrowser://settings"); }
+void BrowserWindow::open_settings() {
+  new_tab("openbrowser://settings");
+}
 
-void BrowserWindow::open_bookmarks() { new_tab("openbrowser://bookmarks"); }
+void BrowserWindow::open_bookmarks() {
+  new_tab("openbrowser://bookmarks");
+}
 
-void BrowserWindow::open_history() { new_tab("openbrowser://history"); }
+void BrowserWindow::open_history() {
+  new_tab("openbrowser://history");
+}
 
-void BrowserWindow::open_about() { new_tab("openbrowser://about"); }
+void BrowserWindow::open_about() {
+  new_tab("openbrowser://about");
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // UI Construction
@@ -495,112 +345,51 @@ void BrowserWindow::build_ui() {
   g_signal_connect(key_ctrl, "key-pressed", G_CALLBACK(on_key_pressed), this);
   gtk_widget_add_controller(window_, key_ctrl);
 
-  // Main vertical box: [tab bar] [webview stack]
-  main_vbox_ = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-  gtk_window_set_child(GTK_WINDOW(window_), main_vbox_);
+  // ── Build the browser shell (header bar + tab strip + content stack) ───
+  shell_ = std::make_unique<ui::BrowserShell>(GTK_WINDOW(window_));
 
-  setup_header_bar();
-  setup_tab_bar();
+  shell_->set_callbacks({
+      .on_back = [this]() { go_back(); },
+      .on_forward = [this]() { go_forward(); },
+      .on_reload_or_stop =
+          [this]() {
+            Tab *tab = active_tab();
+            if (tab && tab->loading) {
+              stop();
+            } else {
+              reload();
+            }
+          },
+      .on_navigate = [this](const std::string &url) { navigate(url); },
+      .on_tab_clicked = [this](int tab_id) { switch_tab(tab_id); },
+      .on_tab_closed = [this](int tab_id) { close_tab(tab_id); },
+      .on_new_tab = [this]() { new_tab(); },
+      .on_minimize = [this]() { gtk_window_minimize(GTK_WINDOW(window_)); },
+      .on_maximize =
+          [this]() {
+            if (gtk_window_is_maximized(GTK_WINDOW(window_))) {
+              gtk_window_unmaximize(GTK_WINDOW(window_));
+            } else {
+              gtk_window_maximize(GTK_WINDOW(window_));
+            }
+          },
+      .on_close = [this]() { gtk_window_destroy(GTK_WINDOW(window_)); },
+  });
 
-  // WebView stack
-  webview_stack_ = gtk_stack_new();
-  gtk_stack_set_transition_type(GTK_STACK(webview_stack_),
-                                GTK_STACK_TRANSITION_TYPE_CROSSFADE);
-  gtk_stack_set_transition_duration(GTK_STACK(webview_stack_), 100);
-  gtk_widget_set_hexpand(webview_stack_, TRUE);
-  gtk_widget_set_vexpand(webview_stack_, TRUE);
-  gtk_box_append(GTK_BOX(main_vbox_), webview_stack_);
+  // Set root vbox as window child
+  gtk_window_set_child(GTK_WINDOW(window_), shell_->get_root_vbox());
+
+  // Keep a convenience pointer to the content stack
+  webview_stack_ = shell_->get_content_stack();
+
+  // Set up menu and window actions
+  setup_menu_and_actions();
 
   // Open the first tab
   new_tab("openbrowser://newtab");
 }
 
-void BrowserWindow::setup_header_bar() {
-  header_bar_ = gtk_header_bar_new();
-  // Keep system title buttons OFF — we draw our own below
-  gtk_header_bar_set_show_title_buttons(GTK_HEADER_BAR(header_bar_), FALSE);
-  gtk_window_set_titlebar(GTK_WINDOW(window_), header_bar_);
-
-  // ── Window controls: minimize / maximize / close — RIGHT side ────────
-  GtkWidget *wctl_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_widget_set_margin_start(wctl_box, 4);
-
-  win_min_btn_ = gtk_button_new_from_icon_name("ob-circle-minus");
-  gtk_widget_add_css_class(win_min_btn_, "wctl-btn");
-  gtk_widget_add_css_class(win_min_btn_, "wctl-min");
-  gtk_widget_set_tooltip_text(win_min_btn_, "Minimize");
-  g_signal_connect(win_min_btn_, "clicked", G_CALLBACK(on_win_minimize), this);
-  gtk_box_append(GTK_BOX(wctl_box), win_min_btn_);
-
-  win_max_btn_ = gtk_button_new_from_icon_name("ob-maximize");
-  gtk_widget_add_css_class(win_max_btn_, "wctl-btn");
-  gtk_widget_add_css_class(win_max_btn_, "wctl-max");
-  gtk_widget_set_tooltip_text(win_max_btn_, "Maximize");
-  g_signal_connect(win_max_btn_, "clicked", G_CALLBACK(on_win_maximize), this);
-  gtk_box_append(GTK_BOX(wctl_box), win_max_btn_);
-
-  win_close_btn_ = gtk_button_new_from_icon_name("ob-circle-x");
-  gtk_widget_add_css_class(win_close_btn_, "wctl-btn");
-  gtk_widget_add_css_class(win_close_btn_, "wctl-close");
-  gtk_widget_set_tooltip_text(win_close_btn_, "Close");
-  g_signal_connect(win_close_btn_, "clicked", G_CALLBACK(on_win_close), this);
-  gtk_box_append(GTK_BOX(wctl_box), win_close_btn_);
-
-  // Pack on RIGHT side — pack_end items appear right-to-left in GTK4
-  // Pack order: wctl first = rightmost, then menu, then new_tab = leftmost
-  gtk_header_bar_pack_end(GTK_HEADER_BAR(header_bar_), wctl_box);
-
-  // ── Left nav controls: back, forward, reload ──────────────────────────
-  GtkWidget *nav_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-
-  back_button_ = gtk_button_new_from_icon_name("ob-arrow-left");
-  gtk_widget_set_tooltip_text(back_button_, "Back (Alt+Left)");
-  gtk_widget_set_sensitive(back_button_, FALSE);
-  g_signal_connect(back_button_, "clicked", G_CALLBACK(on_back_clicked), this);
-  gtk_box_append(GTK_BOX(nav_box), back_button_);
-
-  forward_button_ = gtk_button_new_from_icon_name("ob-arrow-right");
-  gtk_widget_set_tooltip_text(forward_button_, "Forward (Alt+Right)");
-  gtk_widget_set_sensitive(forward_button_, FALSE);
-  g_signal_connect(forward_button_, "clicked", G_CALLBACK(on_forward_clicked),
-                   this);
-  gtk_box_append(GTK_BOX(nav_box), forward_button_);
-
-  reload_button_ = gtk_button_new_from_icon_name("ob-refresh-cw");
-  gtk_widget_set_tooltip_text(reload_button_, "Reload (Ctrl+R)");
-  g_signal_connect(reload_button_, "clicked", G_CALLBACK(on_reload_clicked),
-                   this);
-  gtk_box_append(GTK_BOX(nav_box), reload_button_);
-
-  gtk_header_bar_pack_start(GTK_HEADER_BAR(header_bar_), nav_box);
-
-  // ── Centre: address bar ───────────────────────────────────────────────
-  GtkWidget *addr_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_widget_set_hexpand(addr_box, TRUE);
-
-  security_icon_ = gtk_image_new_from_icon_name("ob-lock");
-  gtk_image_set_pixel_size(GTK_IMAGE(security_icon_), 14);
-  gtk_widget_set_opacity(security_icon_, 0.45);
-  gtk_box_append(GTK_BOX(addr_box), security_icon_);
-
-  address_bar_ = gtk_entry_new();
-  gtk_widget_set_name(address_bar_, "address-bar");
-  gtk_widget_set_hexpand(address_bar_, TRUE);
-  gtk_entry_set_placeholder_text(GTK_ENTRY(address_bar_),
-                                 "Search or enter address");
-  gtk_entry_set_input_purpose(GTK_ENTRY(address_bar_), GTK_INPUT_PURPOSE_URL);
-  g_signal_connect(address_bar_, "activate", G_CALLBACK(on_address_activate),
-                   this);
-  gtk_box_append(GTK_BOX(addr_box), address_bar_);
-
-  gtk_header_bar_set_title_widget(GTK_HEADER_BAR(header_bar_), addr_box);
-
-  // ── Right controls (pack_end — rightmost packed = rightmost shown) ─────
-  // Order we want left→right: [+new tab] [☰ menu] [_ □ ✕]
-  // So pack in reverse: wctl FIRST (rightmost), then menu, then new_tab
-
-  // wctl_box already packed above as first pack_end = rightmost
-
+void BrowserWindow::setup_menu_and_actions() {
   GMenu *menu = g_menu_new();
   g_menu_append(menu, "Settings", "win.settings");
   g_menu_append(menu, "Bookmarks", "win.bookmarks");
@@ -615,19 +404,9 @@ void BrowserWindow::setup_header_bar() {
   g_menu_append_section(menu, "Zoom", G_MENU_MODEL(zoom_section));
   g_object_unref(zoom_section);
 
-  menu_button_ = gtk_menu_button_new();
-  gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(menu_button_), "ob-menu");
-  gtk_menu_button_set_menu_model(GTK_MENU_BUTTON(menu_button_),
+  gtk_menu_button_set_menu_model(GTK_MENU_BUTTON(shell_->get_menu_button()),
                                  G_MENU_MODEL(menu));
   g_object_unref(menu);
-  gtk_header_bar_pack_end(GTK_HEADER_BAR(header_bar_), menu_button_);
-
-  new_tab_button_ = gtk_button_new_from_icon_name("ob-plus");
-  gtk_widget_set_name(new_tab_button_, "new-tab-button");
-  gtk_widget_set_tooltip_text(new_tab_button_, "New Tab (Ctrl+T)");
-  g_signal_connect(new_tab_button_, "clicked", G_CALLBACK(on_new_tab_clicked),
-                   this);
-  gtk_header_bar_pack_end(GTK_HEADER_BAR(header_bar_), new_tab_button_);
 
   // Register window actions
   auto add_action = [this](const char *name, GCallback cb) {
@@ -645,37 +424,6 @@ void BrowserWindow::setup_header_bar() {
   add_action("zoom-in", G_CALLBACK(on_menu_zoom_in));
   add_action("zoom-out", G_CALLBACK(on_menu_zoom_out));
   add_action("zoom-reset", G_CALLBACK(on_menu_zoom_reset));
-}
-
-void BrowserWindow::setup_tab_bar() {
-  // Outer box: [scrolled-tabs] [add-tab-button]
-  GtkWidget *tab_bar_outer = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_widget_set_hexpand(tab_bar_outer, TRUE);
-  gtk_widget_set_name(tab_bar_outer, "tab-bar-outer");
-
-  tab_scroll_ = gtk_scrolled_window_new();
-  gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(tab_scroll_),
-                                 GTK_POLICY_AUTOMATIC, GTK_POLICY_NEVER);
-  gtk_widget_set_hexpand(tab_scroll_, TRUE);
-
-  tab_bar_box_ = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_widget_set_name(tab_bar_box_, "tab-bar");
-  gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(tab_scroll_), tab_bar_box_);
-
-  gtk_box_append(GTK_BOX(tab_bar_outer), tab_scroll_);
-
-  // ── Add-tab button (+ at right of tab bar) ────────────────────────────
-  GtkWidget *add_tab_btn = gtk_button_new_from_icon_name("ob-plus");
-  gtk_widget_set_name(add_tab_btn, "tab-add-button");
-  gtk_widget_set_tooltip_text(add_tab_btn, "New Tab (Ctrl+T)");
-  gtk_widget_set_valign(add_tab_btn, GTK_ALIGN_CENTER);
-  gtk_widget_set_margin_start(add_tab_btn, 4);
-  gtk_widget_set_margin_end(add_tab_btn, 6);
-  g_signal_connect(add_tab_btn, "clicked", G_CALLBACK(on_new_tab_clicked),
-                   this);
-  gtk_box_append(GTK_BOX(tab_bar_outer), add_tab_btn);
-
-  gtk_box_append(GTK_BOX(main_vbox_), tab_bar_outer);
 }
 
 void BrowserWindow::setup_webview_for_tab(Tab &tab) {
@@ -748,7 +496,15 @@ void BrowserWindow::setup_webview_for_tab(Tab &tab) {
 
 void BrowserWindow::apply_css() {
   css_provider_ = gtk_css_provider_new();
-  gtk_css_provider_load_from_data(css_provider_, kBrowserCSS, -1);
+
+  // Load theme from external CSS file
+  const std::string css_path = find_theme_file("shell.css");
+  if (!css_path.empty()) {
+    GFile *file = g_file_new_for_path(css_path.c_str());
+    gtk_css_provider_load_from_file(css_provider_, file);
+    g_object_unref(file);
+  }
+
   gtk_style_context_add_provider_for_display(
       gdk_display_get_default(), GTK_STYLE_PROVIDER(css_provider_),
       GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -780,7 +536,9 @@ void BrowserWindow::apply_css() {
 // State helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
-Tab *BrowserWindow::active_tab() { return find_tab(active_tab_id_); }
+Tab *BrowserWindow::active_tab() {
+  return find_tab(active_tab_id_);
+}
 
 const Tab *BrowserWindow::active_tab() const {
   return const_cast<BrowserWindow *>(this)->find_tab(active_tab_id_);
@@ -801,30 +559,24 @@ Tab *BrowserWindow::find_tab_by_webview(WebKitWebView *wv) {
 void BrowserWindow::update_navigation_buttons() {
   const Tab *tab = active_tab();
   if (!tab) {
-    gtk_widget_set_sensitive(back_button_, FALSE);
-    gtk_widget_set_sensitive(forward_button_, FALSE);
+    shell_->set_can_go_back(false);
+    shell_->set_can_go_forward(false);
     return;
   }
-  gtk_widget_set_sensitive(back_button_,
-                           webkit_web_view_can_go_back(tab->webview));
-  gtk_widget_set_sensitive(forward_button_,
-                           webkit_web_view_can_go_forward(tab->webview));
+  shell_->set_can_go_back(webkit_web_view_can_go_back(tab->webview));
+  shell_->set_can_go_forward(webkit_web_view_can_go_forward(tab->webview));
 }
 
 void BrowserWindow::update_address_bar(const std::string &url) {
   // Strip internal scheme for display
   const std::string display = url.starts_with("openbrowser://") ? url : url;
-  gtk_editable_set_text(GTK_EDITABLE(address_bar_), display.c_str());
+  shell_->set_url(display);
 
   // Security indicator
   const bool secure = url.starts_with("https://") ||
                       url.starts_with("openbrowser://") ||
                       url.starts_with("file://") || url.starts_with("data:");
-  if (security_icon_) {
-    gtk_image_set_from_icon_name(GTK_IMAGE(security_icon_),
-                                 secure ? "ob-lock" : "ob-lock-open");
-    gtk_widget_set_opacity(security_icon_, secure ? 0.6 : 1.0);
-  }
+  shell_->set_secure(secure);
 }
 
 void BrowserWindow::update_title(const std::string &title) {
@@ -844,93 +596,9 @@ void BrowserWindow::update_tab_label(int tab_id, const std::string &title,
 }
 
 void BrowserWindow::rebuild_tab_bar_buttons() {
-  // Remove all current children
-  GtkWidget *child = gtk_widget_get_first_child(tab_bar_box_);
-  while (child) {
-    GtkWidget *next = gtk_widget_get_next_sibling(child);
-    gtk_box_remove(GTK_BOX(tab_bar_box_), child);
-    child = next;
-  }
-
+  shell_->clear_tabs();
   for (const Tab &tab : tabs_) {
-    // ── Outer wrapper: [tab-btn] [close-btn] side-by-side ────────────
-    GtkWidget *outer = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_add_css_class(outer, "tab-outer");
-    if (tab.id == active_tab_id_) {
-      gtk_widget_add_css_class(outer, "active-tab-outer");
-    }
-
-    // ── Tab switch button (icon + title) ──────────────────────────────
-    GtkWidget *inner = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-
-    // Favicon / spinner
-    if (tab.loading) {
-      GtkWidget *spinner = gtk_spinner_new();
-      gtk_spinner_start(GTK_SPINNER(spinner));
-      gtk_widget_set_size_request(spinner, 14, 14);
-      gtk_box_append(GTK_BOX(inner), spinner);
-    } else {
-      GtkWidget *favicon = gtk_image_new_from_icon_name("ob-globe");
-      gtk_image_set_pixel_size(GTK_IMAGE(favicon), 14);
-      gtk_widget_set_opacity(favicon, 0.5);
-      gtk_box_append(GTK_BOX(inner), favicon);
-    }
-
-    // Title label
-    std::string label_text = tab.title.empty() ? "New Tab" : tab.title;
-    if (label_text.size() > 20)
-      label_text = label_text.substr(0, 18) + "…";
-    GtkWidget *label = gtk_label_new(label_text.c_str());
-    gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
-    gtk_box_append(GTK_BOX(inner), label);
-
-    GtkWidget *tab_btn = gtk_button_new();
-    gtk_button_set_child(GTK_BUTTON(tab_btn), inner);
-    gtk_widget_add_css_class(tab_btn, "tab-button");
-    if (tab.id == active_tab_id_) {
-      gtk_widget_add_css_class(tab_btn, "active-tab");
-    }
-
-    // Switch signal — clean, one binding only
-    {
-      struct D {
-        BrowserWindow *w;
-        int id;
-      };
-      auto *d = new D{this, tab.id};
-      g_signal_connect_data(
-          tab_btn, "clicked", G_CALLBACK(+[](GtkButton *, gpointer p) {
-            auto *d = static_cast<D *>(p);
-            d->w->switch_tab(d->id);
-          }),
-          d, [](gpointer p, GClosure *) { delete static_cast<D *>(p); },
-          static_cast<GConnectFlags>(0));
-    }
-
-    // ── Close button — separate widget, NOT inside tab_btn ───────────
-    GtkWidget *close_btn = gtk_button_new_from_icon_name("ob-x");
-    gtk_widget_add_css_class(close_btn, "tab-close");
-    gtk_widget_set_tooltip_text(close_btn, "Close tab (Ctrl+W)");
-    gtk_widget_set_valign(close_btn, GTK_ALIGN_CENTER);
-
-    {
-      struct D {
-        BrowserWindow *w;
-        int id;
-      };
-      auto *d = new D{this, tab.id};
-      g_signal_connect_data(
-          close_btn, "clicked", G_CALLBACK(+[](GtkButton *, gpointer p) {
-            auto *d = static_cast<D *>(p);
-            d->w->close_tab(d->id);
-          }),
-          d, [](gpointer p, GClosure *) { delete static_cast<D *>(p); },
-          static_cast<GConnectFlags>(0));
-    }
-
-    gtk_box_append(GTK_BOX(outer), tab_btn);
-    gtk_box_append(GTK_BOX(outer), close_btn);
-    gtk_box_append(GTK_BOX(tab_bar_box_), outer);
+    shell_->add_tab(tab.id, tab.title, tab.loading, tab.id == active_tab_id_);
   }
 }
 
@@ -1026,8 +694,7 @@ void BrowserWindow::on_load_changed(WebKitWebView *web_view,
   case WEBKIT_LOAD_STARTED:
     tab->loading = true;
     if (tab->id == self->active_tab_id_) {
-      gtk_button_set_icon_name(GTK_BUTTON(self->reload_button_), "ob-x");
-      gtk_widget_set_tooltip_text(self->reload_button_, "Stop loading");
+      self->shell_->set_loading(true);
     }
     break;
 
@@ -1046,9 +713,7 @@ void BrowserWindow::on_load_changed(WebKitWebView *web_view,
   case WEBKIT_LOAD_FINISHED:
     tab->loading = false;
     if (tab->id == self->active_tab_id_) {
-      gtk_button_set_icon_name(GTK_BUTTON(self->reload_button_),
-                               "ob-refresh-cw");
-      gtk_widget_set_tooltip_text(self->reload_button_, "Reload (Ctrl+R)");
+      self->shell_->set_loading(false);
       self->update_navigation_buttons();
     }
     // Record history (skip internal pages)
@@ -1137,40 +802,6 @@ WebKitWebView *BrowserWindow::on_create_webview(WebKitWebView * /*web_view*/,
   return tab ? tab->webview : nullptr;
 }
 
-void BrowserWindow::on_back_clicked(GtkButton * /*button*/,
-                                    gpointer user_data) {
-  static_cast<BrowserWindow *>(user_data)->go_back();
-}
-
-void BrowserWindow::on_forward_clicked(GtkButton * /*button*/,
-                                       gpointer user_data) {
-  static_cast<BrowserWindow *>(user_data)->go_forward();
-}
-
-void BrowserWindow::on_reload_clicked(GtkButton * /*button*/,
-                                      gpointer user_data) {
-  auto *self = static_cast<BrowserWindow *>(user_data);
-  Tab *tab = self->active_tab();
-  if (tab && tab->loading) {
-    self->stop();
-  } else {
-    self->reload();
-  }
-}
-
-void BrowserWindow::on_address_activate(GtkEntry *entry, gpointer user_data) {
-  auto *self = static_cast<BrowserWindow *>(user_data);
-  const char *text = gtk_editable_get_text(GTK_EDITABLE(entry));
-  if (text && *text) {
-    self->navigate(std::string(text));
-  }
-}
-
-void BrowserWindow::on_new_tab_clicked(GtkButton * /*button*/,
-                                       gpointer user_data) {
-  static_cast<BrowserWindow *>(user_data)->new_tab();
-}
-
 // Menu action callbacks
 void BrowserWindow::on_menu_settings(GSimpleAction *, GVariant *, gpointer ud) {
   static_cast<BrowserWindow *>(ud)->open_settings();
@@ -1214,27 +845,6 @@ void BrowserWindow::on_menu_zoom_reset(GSimpleAction *, GVariant *,
   }
 }
 
-// ── Window control handlers ───────────────────────────────────────────────
-
-void BrowserWindow::on_win_close(GtkButton * /*b*/, gpointer ud) {
-  auto *self = static_cast<BrowserWindow *>(ud);
-  gtk_window_destroy(GTK_WINDOW(self->window_));
-}
-
-void BrowserWindow::on_win_minimize(GtkButton * /*b*/, gpointer ud) {
-  auto *self = static_cast<BrowserWindow *>(ud);
-  gtk_window_minimize(GTK_WINDOW(self->window_));
-}
-
-void BrowserWindow::on_win_maximize(GtkButton * /*b*/, gpointer ud) {
-  auto *self = static_cast<BrowserWindow *>(ud);
-  if (gtk_window_is_maximized(GTK_WINDOW(self->window_))) {
-    gtk_window_unmaximize(GTK_WINDOW(self->window_));
-  } else {
-    gtk_window_maximize(GTK_WINDOW(self->window_));
-  }
-}
-
 // ── Theme broadcast ───────────────────────────────────────────────────────
 
 void BrowserWindow::broadcast_to_all_tabs(const std::string &js) {
@@ -1250,47 +860,17 @@ void BrowserWindow::apply_theme_to_all_tabs(const std::string &theme) {
   current_theme_ = theme;
 
   // ── Apply dark/light GTK CSS to the native chrome ────────────────────
-  static constexpr const char *kDarkCSS = R"CSS(
-window.open-browser-window {
-    background-color: #09090b;
-}
-headerbar {
-    background: #18181b;
-    border-bottom-color: #3f3f46;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.35);
-}
-headerbar button { color: #a1a1aa; }
-headerbar button:hover { background: rgba(255,255,255,0.08); color: #fafafa; }
-headerbar button:disabled { color: #52525b; }
-entry#address-bar {
-    background: #27272a;
-    border-color: #3f3f46;
-    color: #fafafa;
-}
-entry#address-bar:focus {
-    background: #18181b;
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
-}
-box#tab-bar, box#tab-bar-outer {
-    background: #09090b;
-    border-bottom-color: #27272a;
-}
-box.tab-outer { background: transparent; }
-box.tab-outer.active-tab-outer { background: #18181b; }
-button.tab-button { color: #71717a; }
-button.tab-button:hover { background: rgba(255,255,255,0.05); color: #d4d4d8; }
-button.tab-button.active-tab { color: #fafafa; }
-)CSS";
-
-  static constexpr const char *kLightCSS = ""; // revert to base theme
-
   if (!dark_css_provider_) {
     dark_css_provider_ = gtk_css_provider_new();
   }
 
   if (theme == "dark") {
-    gtk_css_provider_load_from_data(dark_css_provider_, kDarkCSS, -1);
+    const std::string dark_path = find_theme_file("shell-dark.css");
+    if (!dark_path.empty()) {
+      GFile *file = g_file_new_for_path(dark_path.c_str());
+      gtk_css_provider_load_from_file(dark_css_provider_, file);
+      g_object_unref(file);
+    }
     if (!dark_css_applied_) {
       gtk_style_context_add_provider_for_display(
           gdk_display_get_default(), GTK_STYLE_PROVIDER(dark_css_provider_),
@@ -1299,7 +879,8 @@ button.tab-button.active-tab { color: #fafafa; }
     }
     gtk_widget_add_css_class(window_, "dark-mode");
   } else {
-    gtk_css_provider_load_from_data(dark_css_provider_, kLightCSS, -1);
+    // Load empty string to clear the dark override
+    gtk_css_provider_load_from_string(dark_css_provider_, "");
     gtk_widget_remove_css_class(window_, "dark-mode");
   }
 

@@ -139,9 +139,10 @@ install(FILES resources/icons/hicolor/48x48/apps/io.openbrowser.Browser.png
 install(FILES resources/icons/hicolor/32x32/apps/io.openbrowser.Browser.png
     DESTINATION share/icons/hicolor/32x32/apps)
 
-# Install GTK theme
+# Install GTK themes (shell.css is the active theme)
 install(
-    FILES src/themes/open-browser.css
+    FILES src/themes/shell.css
+          src/themes/shell-dark.css
     DESTINATION share/open-browser/themes
 )
 

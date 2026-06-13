@@ -7,6 +7,8 @@
 #include <webkit/webkit.h>
 #endif
 
+#include "ui/browser_shell.h"
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -70,8 +72,7 @@ public:
 private:
   // Build the complete window UI.
   void build_ui();
-  void setup_header_bar();
-  void setup_tab_bar();
+  void setup_menu_and_actions();
   void setup_webview_for_tab(Tab &tab);
   void apply_css();
 
@@ -107,18 +108,6 @@ private:
                                           WebKitNavigationAction *action,
                                           gpointer user_data);
 
-  // Header bar widget callbacks.
-  static void on_back_clicked(GtkButton *button, gpointer user_data);
-  static void on_forward_clicked(GtkButton *button, gpointer user_data);
-  static void on_reload_clicked(GtkButton *button, gpointer user_data);
-  static void on_address_activate(GtkEntry *entry, gpointer user_data);
-  static void on_new_tab_clicked(GtkButton *button, gpointer user_data);
-
-  // Window control callbacks
-  static void on_win_close(GtkButton *button, gpointer user_data);
-  static void on_win_minimize(GtkButton *button, gpointer user_data);
-  static void on_win_maximize(GtkButton *button, gpointer user_data);
-
   // WebKit script message handler — receives messages from page JS
   static void on_script_message(WebKitUserContentManager *manager,
                                 JSCValue *value, gpointer user_data);
@@ -141,25 +130,15 @@ private:
   static void on_menu_zoom_reset(GSimpleAction *action, GVariant *param,
                                  gpointer user_data);
 
-  // ── Widget references ──────────────────────────────────────────────────
+  // ── Core references ────────────────────────────────────────────────────
   GtkApplication *app_ = nullptr;
   GtkWidget *window_ = nullptr;
-  GtkWidget *header_bar_ = nullptr;
-  GtkWidget *tab_bar_box_ = nullptr;   // HBox holding tab buttons
-  GtkWidget *tab_scroll_ = nullptr;    // ScrolledWindow around tab_bar_box_
-  GtkWidget *webview_stack_ = nullptr; // GtkStack, one page per tab
-  GtkWidget *address_bar_ = nullptr;
-  GtkWidget *back_button_ = nullptr;
-  GtkWidget *forward_button_ = nullptr;
-  GtkWidget *reload_button_ = nullptr;
-  GtkWidget *new_tab_button_ = nullptr;
-  GtkWidget *menu_button_ = nullptr;
-  GtkWidget *security_icon_ = nullptr; // Lock icon in address bar
-  GtkWidget *main_vbox_ = nullptr;     // Window root VBox
-  // Window control buttons (close / minimize / maximize)
-  GtkWidget *win_close_btn_ = nullptr;
-  GtkWidget *win_min_btn_ = nullptr;
-  GtkWidget *win_max_btn_ = nullptr;
+
+  // Browser shell owns all chrome UI components
+  std::unique_ptr<ui::BrowserShell> shell_;
+
+  // Convenience pointer to the content stack inside the shell
+  GtkWidget *webview_stack_ = nullptr;
 
   // ── Tab state ─────────────────────────────────────────────────────────
   std::vector<Tab> tabs_;
