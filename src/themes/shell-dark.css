@@ -1,172 +1,145 @@
 /* ══════════════════════════════════════════════════════════════════════════════
-   Open Browser — Shell Theme (Dark override)
-   Version 2.0 — Polished
-   Applied on top of shell.css when user selects dark mode via settings.
-   Uses consistent Zinc dark palette with blue accent.
+   Open Browser v3 — Dark Theme Override
+   Applied on top of shell.css when user selects dark mode.
+   Identical layout, dark surface colors.
    ══════════════════════════════════════════════════════════════════════════════ */
 
 window.open-browser-window {
     background-color: #111113;
 }
 
-/* ── Title bar ───────────────────────────────────────────────────────────── */
+/* ── Tab row ─────────────────────────────────────────────────────────────── */
 
-headerbar#shell-titlebar {
-    background: #1a1a1e;
-    border-bottom-color: #27272a;
+box#tab-row {
+    background: #1a1a1d;
 }
 
-headerbar#shell-titlebar button {
-    color: #a1a1aa;
+.tab-item:hover {
+    background: rgba(255, 255, 255, 0.04);
 }
 
-headerbar#shell-titlebar button:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: #e4e4e7;
+.tab-item.tab-active {
+    background: #28282c;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-headerbar#shell-titlebar button:active {
+.tab-item.tab-active:hover {
+    background: #28282c;
+}
+
+.tab-item.new-tab-item {
+    color: #8e8e93;
+}
+
+.tab-item.new-tab-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: #c7c7cc;
+}
+
+button.tab-btn {
+    color: #8e8e93;
+}
+
+button.tab-btn:hover {
+    color: #c7c7cc;
+}
+
+button.tab-btn.tab-btn-active {
+    color: #f2f2f7;
+}
+
+button.tab-close-btn {
+    color: #636366;
+}
+
+button.tab-close-btn:hover {
     background: rgba(255, 255, 255, 0.10);
+    color: #aeaeb2;
 }
 
 /* ── Window controls ─────────────────────────────────────────────────────── */
 
 button.wctl-btn {
-    color: #a1a1aa;
+    opacity: 0.7;
 }
 
 button.wctl-btn:hover {
-    color: #e4e4e7;
-    background: rgba(255, 255, 255, 0.07);
-}
-
-/* Keep colored hover states for close/max/min */
-
-/* ── Tab bar ─────────────────────────────────────────────────────────────── */
-
-box#tab-bar-outer {
-    background: #1a1a1e;
-    border-bottom-color: #27272a;
-}
-
-box.tab-outer:hover {
-    background: rgba(255, 255, 255, 0.025);
-}
-
-box.tab-outer.active-tab-outer {
-    background: #232327;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-box.tab-outer.active-tab-outer:hover {
-    background: #232327;
-}
-
-button.tab-button {
-    color: #a1a1aa;
-}
-
-button.tab-button:hover {
-    color: #d4d4d8;
-}
-
-button.tab-button.active-tab {
-    color: #fafafa;
-}
-
-button.tab-close {
-    color: #71717a;
-}
-
-button.tab-close:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #d4d4d8;
-}
-
-button#new-tab-button,
-button[name="tab-add-button"] {
-    color: #a1a1aa;
-}
-
-button#new-tab-button:hover,
-button[name="tab-add-button"]:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #e4e4e7;
+    opacity: 1;
 }
 
 /* ── Toolbar ─────────────────────────────────────────────────────────────── */
 
-box#shell-toolbar {
+box#toolbar {
     background: #111113;
-    border-bottom-color: #27272a;
+    border-bottom-color: #2c2c2e;
 }
 
-box#shell-toolbar button {
-    color: #e4e4e7;
+box#toolbar button {
+    color: #c7c7cc;
 }
 
-box#shell-toolbar button:hover {
-    background: #27272a;
-    color: #fafafa;
+box#toolbar button:hover {
+    background: #28282c;
+    color: #f2f2f7;
 }
 
-box#shell-toolbar button:active {
-    background: #3f3f46;
+box#toolbar button:active {
+    background: #3a3a3c;
 }
 
-box#shell-toolbar button:disabled {
-    color: #52525b;
-    opacity: 0.65;
+box#toolbar button:disabled {
+    color: #48484a;
+    opacity: 0.5;
 }
 
 /* ── Address bar ─────────────────────────────────────────────────────────── */
 
 entry#address-bar {
-    background: #1e1e22;
+    background: #1e1e21;
     border-color: transparent;
-    color: #fafafa;
+    color: #f2f2f7;
     caret-color: #60a5fa;
 }
 
 entry#address-bar:hover:not(:focus) {
-    background: #252529;
+    background: #28282c;
 }
 
 entry#address-bar:focus {
     background: #111113;
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12),
-                0 1px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14),
+                0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 entry#address-bar text {
-    color: #fafafa;
+    color: #f2f2f7;
 }
 
 entry#address-bar placeholder {
-    color: #71717a;
+    color: #636366;
 }
 
 /* ── Menu ────────────────────────────────────────────────────────────────── */
 
-menubutton#shell-menu-button > button {
-    color: #e4e4e7;
+menubutton#toolbar-menu > button {
+    color: #c7c7cc;
 }
 
-menubutton#shell-menu-button > button:hover {
-    background: #27272a;
-    color: #fafafa;
+menubutton#toolbar-menu > button:hover {
+    background: #28282c;
+    color: #f2f2f7;
 }
 
 popover.menu {
-    background: #1e1e22;
-    border-color: #3f3f46;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35),
-                0 2px 8px rgba(0, 0, 0, 0.2);
+    background: #1e1e21;
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.4),
+                0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 popover.menu modelbutton {
-    color: #e4e4e7;
+    color: #e5e5ea;
 }
 
 popover.menu modelbutton:hover {
@@ -174,25 +147,20 @@ popover.menu modelbutton:hover {
     color: #ffffff;
 }
 
-/* ── Scrollbars ──────────────────────────────────────────────────────────── */
+/* ── Misc ────────────────────────────────────────────────────────────────── */
 
 scrollbar slider {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.10);
 }
 
 scrollbar slider:hover {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.20);
 }
-
-/* ── Tooltip ─────────────────────────────────────────────────────────────── */
 
 tooltip {
-    background: #3f3f46;
-    color: #fafafa;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: #3a3a3c;
+    color: #f2f2f7;
 }
-
-/* ── Spinner ─────────────────────────────────────────────────────────────── */
 
 spinner {
     color: #60a5fa;

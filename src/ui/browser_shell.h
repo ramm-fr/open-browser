@@ -13,27 +13,23 @@
 
 namespace open_browser::ui {
 
-// BrowserShell — a reusable container that assembles the complete browser
-// chrome: header bar (navigation + address bar + menu + window controls),
-// tab strip, and a content area (GtkStack for WebViews).
+// BrowserShell — assembles the complete browser chrome.
 //
-// Layout (top to bottom):
-//   [GtkHeaderBar: [NavBar] [AddressBar (title widget)] [+NewTab] [Menu]
-//   [WinCtrl]] [TabStrip: scrollable tabs + new-tab button] [GtkStack: one page
-//   per tab (content area)]
+// New layout:
+//   Row 1: [TabStrip (left)] [WindowControls (far right)]
+//   Row 2: [(←)(→)(⟳)] [────── Address Bar ──────] [(≡)]
+//   Row 3: [GtkStack — web content]
 //
-// BrowserShell does NOT own WebKitWebViews or manage tab state.
-// It provides widget containers and callbacks — the owner (BrowserWindow)
-// wires up the logic.
+// The title bar is a minimal GtkHeaderBar used only for window drag.
+// All visible chrome is in custom GTK boxes below it.
 class BrowserShell {
 public:
-  // Callbacks the owner sets to respond to user interactions
   struct Callbacks {
     // Navigation
     std::function<void()> on_back;
     std::function<void()> on_forward;
     std::function<void()> on_reload_or_stop;
-    std::function<void(const std::string &)> on_navigate; // address bar Enter
+    std::function<void(const std::string &)> on_navigate;
 
     // Tabs
     std::function<void(int)> on_tab_clicked;
@@ -49,44 +45,28 @@ public:
   explicit BrowserShell(GtkWindow *window);
   ~BrowserShell();
 
-  // ── Setup ──────────────────────────────────────────────────────────────
-
   // Wire all callbacks. Must be called before show().
   void set_callbacks(const Callbacks &callbacks);
 
   // ── Widget access ──────────────────────────────────────────────────────
-
-  // The root vertical box (window child). Contains header bar, tab strip,
-  // and content stack from top to bottom.
   GtkWidget *get_root_vbox() const { return main_vbox_; }
-
-  // The GtkStack where WebView pages are added by the owner.
   GtkWidget *get_content_stack() const { return content_stack_; }
-
-  // The GtkHeaderBar (set as window titlebar by BrowserShell).
   GtkWidget *get_header_bar() const { return header_bar_; }
+  GtkWidget *get_menu_button() const { return menu_button_; }
 
   // ── Address bar operations ─────────────────────────────────────────────
-
   void set_url(const std::string &url);
   void set_secure(bool secure);
   void focus_address_bar();
 
   // ── Navigation bar operations ──────────────────────────────────────────
-
   void set_can_go_back(bool can);
   void set_can_go_forward(bool can);
   void set_loading(bool loading);
 
   // ── Tab strip operations ───────────────────────────────────────────────
-
-  // Full rebuild: clear all tabs, then add each one.
   void clear_tabs();
   void add_tab(int tab_id, const std::string &title, bool loading, bool active);
-
-  // ── Menu button access (for owner to attach GMenuModel) ────────────────
-
-  GtkWidget *get_menu_button() const { return menu_button_; }
 
 private:
   void build_ui(GtkWindow *window);
@@ -94,8 +74,11 @@ private:
   // Root container
   GtkWidget *main_vbox_ = nullptr;
 
-  // Header bar and its children
+  // Minimal header bar (for window drag only)
   GtkWidget *header_bar_ = nullptr;
+
+  // Row 1 widgets
+  GtkWidget *tab_row_ = nullptr;
   GtkWidget *menu_button_ = nullptr;
 
   // Content area

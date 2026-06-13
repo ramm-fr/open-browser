@@ -1,227 +1,194 @@
 /* ══════════════════════════════════════════════════════════════════════════════
-   Open Browser — Shell Theme (Light)
-   Version 2.0 — Polished
-   Font: Inter (fallback: system-ui)
-   Accent: #2563eb
+   Open Browser v3 — Light Theme
+   Modern browser chrome. Custom layout, no GTK defaults.
    ══════════════════════════════════════════════════════════════════════════════ */
 
-/* ── Base ────────────────────────────────────────────────────────────────── */
+/* ── Reset & Base ────────────────────────────────────────────────────────── */
 
 window.open-browser-window {
     background: #ffffff;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: #18181b;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1c1c1e;
 }
 
-/* ── Row 1: Title bar ────────────────────────────────────────────────────── */
+/* ── Invisible header bar (CSD drag only) ────────────────────────────────── */
 
 headerbar#shell-titlebar {
-    background: #f7f7f8;
-    border-bottom: 1px solid #efefef;
-    box-shadow: none;
-    padding: 0 12px;
-    min-height: 38px;
-}
-
-headerbar#shell-titlebar button {
     background: transparent;
     border: none;
-    border-radius: 6px;
-    min-width: 0;
+    box-shadow: none;
+    padding: 0;
     min-height: 0;
-    padding: 5px;
+    margin: 0;
+}
+
+/* ── Row 1: Tab Row ──────────────────────────────────────────────────────── */
+
+box#tab-row {
+    background: #f3f3f5;
+    min-height: 44px;
+    padding: 6px 12px 0 12px;
+}
+
+/* ── Tab items (shared base for tabs + new-tab) ──────────────────────────── */
+
+.tab-item {
+    background: transparent;
+    border-radius: 8px 8px 0 0;
+    margin-right: 1px;
+    padding: 0;
+    min-height: 34px;
+    transition: background 140ms ease;
+}
+
+.tab-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.tab-item.tab-active {
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.tab-item.tab-active:hover {
+    background: #ffffff;
+}
+
+/* New tab button (looks like a tab) */
+.tab-item.new-tab-item {
+    padding: 0 14px;
+    min-width: 36px;
+    font-size: 16px;
+    font-weight: 300;
     color: #71717a;
-    transition: background 150ms ease, color 150ms ease;
+    border: none;
 }
 
-headerbar#shell-titlebar button:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #27272a;
-}
-
-headerbar#shell-titlebar button:active {
-    background: rgba(0, 0, 0, 0.09);
+.tab-item.new-tab-item:hover {
+    background: rgba(0, 0, 0, 0.04);
     color: #18181b;
 }
 
-/* ── Window controls ─────────────────────────────────────────────────────── */
-
-button.wctl-btn {
-    background: transparent;
-    border: none;
-    border-radius: 6px;
-    padding: 6px;
-    min-width: 18px;
-    min-height: 18px;
-    margin: 0 1px;
-    color: #71717a;
-    transition: background 150ms ease, color 150ms ease;
+.tab-item.new-tab-item:active {
+    background: rgba(0, 0, 0, 0.07);
 }
 
-button.wctl-btn:hover {
-    background: #ebebee;
+/* Tab button inside tab-item */
+button.tab-btn {
+    background: transparent;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 8px 10px 8px 12px;
+    font-size: 12.5px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    color: #52525b;
+    min-width: 40px;
+    transition: color 140ms ease;
+}
+
+button.tab-btn:hover {
     color: #27272a;
 }
 
-button.wctl-close:hover {
-    background: #ef4444;
-    color: #ffffff;
-}
-
-button.wctl-max:hover {
-    background: #22c55e;
-    color: #ffffff;
-}
-
-button.wctl-min:hover {
-    background: #eab308;
-    color: #ffffff;
-}
-
-/* ── Row 2: Tab bar ──────────────────────────────────────────────────────── */
-
-box#tab-bar-outer {
-    background: #f7f7f8;
-    padding: 6px 14px 0 14px;
-    min-height: 40px;
-    border-bottom: 1px solid #efefef;
-}
-
-box#tab-bar {
-    background: transparent;
-    min-height: 36px;
-}
-
-box.tab-outer {
-    background: transparent;
-    border-radius: 10px 10px 0 0;
-    margin-right: 2px;
-    padding: 0;
-    transition: background 150ms ease;
-}
-
-box.tab-outer:hover {
-    background: rgba(0, 0, 0, 0.025);
-}
-
-box.tab-outer.active-tab-outer {
-    background: #ffffff;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.03),
-                0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-box.tab-outer.active-tab-outer:hover {
-    background: #ffffff;
-}
-
-button.tab-button {
-    background: transparent;
-    border: none;
-    border-radius: 10px 10px 0 0;
-    padding: 8px 14px;
-    font-size: 12.5px;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-weight: 400;
-    letter-spacing: -0.1px;
-    color: #71717a;
-    min-width: 48px;
-    transition: color 150ms ease;
-}
-
-button.tab-button:hover {
-    background: transparent;
-    color: #3f3f46;
-}
-
-button.tab-button.active-tab {
-    background: transparent;
+button.tab-btn.tab-btn-active {
     color: #18181b;
     font-weight: 500;
 }
 
-button.tab-close {
+/* Tab close button */
+button.tab-close-btn {
     background: transparent;
     border: none;
-    border-radius: 6px;
-    padding: 3px;
-    margin: 6px 6px 0 0;
+    border-radius: 50%;
+    padding: 4px;
+    margin: 0 6px 0 2px;
     min-width: 18px;
     min-height: 18px;
     opacity: 0;
     color: #a1a1aa;
-    transition: opacity 120ms ease, background 150ms ease, color 150ms ease;
+    transition: opacity 100ms ease, background 140ms ease, color 140ms ease;
 }
 
-box.tab-outer:hover button.tab-close,
-box.tab-outer.active-tab-outer button.tab-close {
+.tab-item:hover button.tab-close-btn,
+.tab-item.tab-active button.tab-close-btn {
     opacity: 1;
 }
 
-button.tab-close:hover {
-    background: rgba(0, 0, 0, 0.07);
+button.tab-close-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
     color: #3f3f46;
 }
 
-button.tab-close:active {
-    background: rgba(0, 0, 0, 0.12);
+button.tab-close-btn:active {
+    background: rgba(0, 0, 0, 0.14);
 }
 
-/* New tab button */
-button#new-tab-button,
-button[name="tab-add-button"] {
+/* ── Window controls (inside tab row, far right) ─────────────────────────── */
+
+button.wctl-btn {
     background: transparent;
     border: none;
-    border-radius: 8px;
-    min-width: 28px;
-    min-height: 28px;
+    border-radius: 50%;
     padding: 0;
-    color: #71717a;
-    transition: background 150ms ease, color 150ms ease;
+    min-width: 14px;
+    min-height: 14px;
+    margin: 0 3px;
+    transition: transform 120ms ease, opacity 120ms ease;
+    opacity: 0.85;
+    color: transparent;
 }
 
-button#new-tab-button:hover,
-button[name="tab-add-button"]:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #27272a;
+button.wctl-btn:hover {
+    opacity: 1;
+    transform: scale(1.12);
 }
 
-button#new-tab-button:active,
-button[name="tab-add-button"]:active {
-    background: rgba(0, 0, 0, 0.09);
+button.wctl-close {
+    background: #ff5f56;
 }
 
-/* ── Row 3: Toolbar ──────────────────────────────────────────────────────── */
+button.wctl-max {
+    background: #27c93f;
+}
 
-box#shell-toolbar {
+button.wctl-min {
+    background: #ffbd2e;
+}
+
+/* ── Row 2: Toolbar ──────────────────────────────────────────────────────── */
+
+box#toolbar {
     background: #ffffff;
+    min-height: 44px;
     border-bottom: 1px solid #f0f0f2;
 }
 
-/* Navigation buttons */
-box#shell-toolbar button {
+/* Navigation buttons — circular */
+box#toolbar button {
     background: transparent;
     border: none;
-    border-radius: 8px;
-    padding: 8px 10px;
+    border-radius: 50%;
+    padding: 8px;
+    min-width: 34px;
+    min-height: 34px;
     color: #3f3f46;
-    min-width: 0;
-    min-height: 0;
-    transition: background 150ms ease, color 150ms ease;
+    transition: background 140ms ease, color 140ms ease;
 }
 
-box#shell-toolbar button:hover {
+box#toolbar button:hover {
     background: #f4f4f5;
     color: #18181b;
 }
 
-box#shell-toolbar button:active {
+box#toolbar button:active {
     background: #e4e4e7;
 }
 
-box#shell-toolbar button:disabled {
+box#toolbar button:disabled {
     color: #d4d4d8;
-    opacity: 0.65;
+    opacity: 0.5;
 }
 
 /* ── Address bar ─────────────────────────────────────────────────────────── */
@@ -229,26 +196,26 @@ box#shell-toolbar button:disabled {
 entry#address-bar {
     background: #f4f4f5;
     border: 1.5px solid transparent;
-    border-radius: 12px;
-    padding: 9px 18px;
+    border-radius: 22px;
+    padding: 9px 20px;
     font-size: 13.5px;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     color: #18181b;
     caret-color: #2563eb;
     min-height: 20px;
-    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    transition: background 160ms ease, border-color 160ms ease,
+                box-shadow 160ms ease;
 }
 
 entry#address-bar:hover:not(:focus) {
-    background: #ededf0;
-    border-color: transparent;
+    background: #ebebee;
 }
 
 entry#address-bar:focus {
     background: #ffffff;
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08),
-                0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10),
+                0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 entry#address-bar text {
@@ -259,23 +226,25 @@ entry#address-bar placeholder {
     color: #a1a1aa;
 }
 
-/* ── Menu button ─────────────────────────────────────────────────────────── */
+/* ── Menu button — circular ──────────────────────────────────────────────── */
 
-menubutton#shell-menu-button > button {
+menubutton#toolbar-menu > button {
     background: transparent;
     border: none;
-    border-radius: 8px;
-    padding: 8px 10px;
+    border-radius: 50%;
+    padding: 8px;
+    min-width: 34px;
+    min-height: 34px;
     color: #3f3f46;
-    transition: background 150ms ease, color 150ms ease;
+    transition: background 140ms ease, color 140ms ease;
 }
 
-menubutton#shell-menu-button > button:hover {
+menubutton#toolbar-menu > button:hover {
     background: #f4f4f5;
     color: #18181b;
 }
 
-menubutton#shell-menu-button > button:active {
+menubutton#toolbar-menu > button:active {
     background: #e4e4e7;
 }
 
@@ -283,10 +252,10 @@ menubutton#shell-menu-button > button:active {
 
 popover.menu {
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08),
-                0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.10),
+                0 3px 10px rgba(0, 0, 0, 0.05);
     padding: 6px;
 }
 
@@ -294,9 +263,9 @@ popover.menu modelbutton {
     border-radius: 8px;
     padding: 9px 14px;
     font-size: 13px;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     color: #27272a;
-    transition: background 120ms ease, color 120ms ease;
+    transition: background 100ms ease;
 }
 
 popover.menu modelbutton:hover {
@@ -317,139 +286,132 @@ scrollbar {
 }
 
 scrollbar slider {
-    background: rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.10);
     border-radius: 100px;
-    min-width: 7px;
-    min-height: 7px;
+    min-width: 6px;
+    min-height: 6px;
     margin: 3px;
-    transition: background 150ms ease;
+    transition: background 140ms ease;
 }
 
 scrollbar slider:hover {
-    background: rgba(0, 0, 0, 0.24);
+    background: rgba(0, 0, 0, 0.22);
 }
 
 /* ── Tooltip ─────────────────────────────────────────────────────────────── */
 
 tooltip {
-    background: #27272a;
+    background: #1c1c1e;
     color: #fafafa;
     border-radius: 8px;
     padding: 6px 12px;
     font-size: 12px;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
-/* ── Private mode ────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════════
+   Private Mode
+   ══════════════════════════════════════════════════════════════════════════════ */
 
 window.open-browser-window.private-mode {
-    background: #18181b;
+    background: #111113;
 }
 
-window.private-mode headerbar#shell-titlebar {
-    background: #1f1f23;
-    border-bottom-color: #2e2e33;
+window.private-mode box#tab-row {
+    background: #1a1a1d;
 }
 
-window.private-mode box#tab-bar-outer {
-    background: #1f1f23;
-    border-bottom-color: #2e2e33;
+window.private-mode .tab-item:hover {
+    background: rgba(255, 255, 255, 0.04);
 }
 
-window.private-mode box.tab-outer:hover {
-    background: rgba(255, 255, 255, 0.03);
+window.private-mode .tab-item.tab-active {
+    background: #28282c;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-window.private-mode box.tab-outer.active-tab-outer {
-    background: #27272a;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+window.private-mode button.tab-btn {
+    color: #8e8e93;
 }
 
-window.private-mode button.tab-button {
-    color: #a1a1aa;
+window.private-mode button.tab-btn:hover {
+    color: #c7c7cc;
 }
 
-window.private-mode button.tab-button:hover {
-    color: #d4d4d8;
+window.private-mode button.tab-btn.tab-btn-active {
+    color: #f2f2f7;
 }
 
-window.private-mode button.tab-button.active-tab {
-    color: #fafafa;
+window.private-mode button.tab-close-btn {
+    color: #636366;
 }
 
-window.private-mode button.tab-close {
-    color: #71717a;
+window.private-mode button.tab-close-btn:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: #aeaeb2;
 }
 
-window.private-mode button.tab-close:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #e4e4e7;
+window.private-mode .tab-item.new-tab-item {
+    color: #8e8e93;
 }
 
-window.private-mode box#shell-toolbar {
-    background: #18181b;
-    border-bottom-color: #2e2e33;
+window.private-mode .tab-item.new-tab-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: #c7c7cc;
 }
 
-window.private-mode box#shell-toolbar button {
-    color: #e4e4e7;
+window.private-mode box#toolbar {
+    background: #111113;
+    border-bottom-color: #2c2c2e;
 }
 
-window.private-mode box#shell-toolbar button:hover {
-    background: #27272a;
-    color: #fafafa;
+window.private-mode box#toolbar button {
+    color: #c7c7cc;
 }
 
-window.private-mode box#shell-toolbar button:disabled {
-    color: #52525b;
+window.private-mode box#toolbar button:hover {
+    background: #28282c;
+    color: #f2f2f7;
+}
+
+window.private-mode box#toolbar button:disabled {
+    color: #48484a;
 }
 
 window.private-mode entry#address-bar {
-    background: #27272a;
+    background: #1e1e21;
     border-color: transparent;
-    color: #fafafa;
+    color: #f2f2f7;
 }
 
 window.private-mode entry#address-bar:hover:not(:focus) {
-    background: #2e2e33;
+    background: #28282c;
 }
 
 window.private-mode entry#address-bar:focus {
-    background: #18181b;
+    background: #111113;
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12),
-                0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14),
+                0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 window.private-mode entry#address-bar text {
-    color: #fafafa;
+    color: #f2f2f7;
 }
 
-window.private-mode menubutton#shell-menu-button > button {
-    color: #e4e4e7;
+window.private-mode menubutton#toolbar-menu > button {
+    color: #c7c7cc;
 }
 
-window.private-mode menubutton#shell-menu-button > button:hover {
-    background: #27272a;
+window.private-mode menubutton#toolbar-menu > button:hover {
+    background: #28282c;
+    color: #f2f2f7;
 }
 
 window.private-mode button.wctl-btn {
-    color: #a1a1aa;
+    opacity: 0.7;
 }
 
 window.private-mode button.wctl-btn:hover {
-    color: #e4e4e7;
-    background: rgba(255, 255, 255, 0.06);
-}
-
-window.private-mode button#new-tab-button,
-window.private-mode button[name="tab-add-button"] {
-    color: #a1a1aa;
-}
-
-window.private-mode button#new-tab-button:hover,
-window.private-mode button[name="tab-add-button"]:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #e4e4e7;
+    opacity: 1;
 }
